@@ -33,38 +33,75 @@ export class MochawesomeJsonParser implements TestParser {
 
   private getTestRunResult(resultsPath: string, mochawesome: MochawesomeJson): TestRunResult {
     const suitesMap: {[path: string]: TestSuiteResult} = {}
+    const results = mochawesome.results[0]
+    const suites = results?.suites
+    const filePath = results.fullFile
 
-    if (
-      mochawesome.results.length > 0 &&
-      mochawesome.results[0].suites.length > 0 &&
-      mochawesome.results[0].suites[0].tests.length > 0
-    ) {
-      const filePath = mochawesome.results[0].fullFile
-      const tests = mochawesome.results[0].suites[0].tests
-
-      const getSuite = (): TestSuiteResult => {
-        const path = this.getRelativePath(filePath)
-        return suitesMap[path] ?? (suitesMap[path] = new TestSuiteResult(path, []))
-      }
-
-      for (const currentTest of tests.filter(test => test.pass)) {
-        const suite = getSuite()
-        this.processTest(suite, currentTest, 'success')
-      }
-
-      for (const currentTest of tests.filter(test => test.fail)) {
-        const suite = getSuite()
-        this.processTest(suite, currentTest, 'failed')
-      }
-
-      for (const currentTest of tests.filter(test => test.pending)) {
-        const suite = getSuite()
-        this.processTest(suite, currentTest, 'skipped')
-      }
+    const getSuite = (): TestSuiteResult => {
+      const path = this.getRelativePath(filePath)
+      return suitesMap[path] ?? (suitesMap[path] = new TestSuiteResult(path, []))
     }
 
-    const suites = Object.values(suitesMap)
-    return new TestRunResult(resultsPath, suites, mochawesome.stats.duration)
+    const processPassingTests = (tests: MochawesomeJsonTest[]) =>
+      tests
+        .filter(test => test.pass)
+        .forEach(passingTest => {
+          const suite = getSuite()
+          this.processTest(suite, passingTest, 'success')
+        })
+
+    const processFailingTests = (tests: MochawesomeJsonTest[]) =>
+      tests
+        .filter(test => test.fail)
+        .forEach(failingTest => {
+          const suite = getSuite()
+          this.processTest(suite, failingTest, 'failed')
+        })
+
+    const processPendingTests = (tests: MochawesomeJsonTest[]) =>
+      tests
+        .filter(test => test.pending)
+        .forEach(pendingTest => {
+          const suite = getSuite()
+          this.processTest(suite, pendingTest, 'skipped')
+        })
+
+    if (suites?.length > 0) {
+      suites.forEach(suite => {
+        // Process suite tests
+        processPassingTests(suite.tests)
+        processFailingTests(suite.tests)
+        processPendingTests(suite.tests)
+
+        let innerSuiteIterator = 0
+
+        const processInnerSuites = () => {
+          const innerSuite = suite.suites[innerSuiteIterator]
+
+          if (innerSuite) {
+            // Process inner suite tests
+            processPassingTests(innerSuite.tests)
+            processFailingTests(innerSuite.tests)
+            processPendingTests(innerSuite.tests)
+
+            const innerSuites = innerSuite.suites
+
+            // If the inner suite has more suites, recursion
+            if (innerSuites?.length > 0) {
+              processInnerSuites()
+            } else {
+              innerSuiteIterator++
+            }
+          }
+        }
+
+        processInnerSuites()
+      })
+    }
+
+    const mappedSuites = Object.values(suitesMap)
+
+    return new TestRunResult(resultsPath, mappedSuites, mochawesome.stats.duration)
   }
 
   private processTest(suite: TestSuiteResult, test: MochawesomeJsonTest, result: TestExecutionResult): void {

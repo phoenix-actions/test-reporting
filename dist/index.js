@@ -1265,32 +1265,65 @@ class MochawesomeJsonParser {
         }
     }
     getTestRunResult(resultsPath, mochawesome) {
+        var _a;
         const suitesMap = {};
-        if (mochawesome.results.length > 0 &&
-            mochawesome.results[0].suites.length > 0 &&
-            mochawesome.results[0].suites[0].tests.length > 0) {
+        const suites = (_a = mochawesome.results[0]) === null || _a === void 0 ? void 0 : _a.suites;
+        if ((suites === null || suites === void 0 ? void 0 : suites.length) > 0) {
             const filePath = mochawesome.results[0].fullFile;
-            const tests = mochawesome.results[0].suites[0].tests;
-            const getSuite = () => {
-                var _a;
-                const path = this.getRelativePath(filePath);
-                return (_a = suitesMap[path]) !== null && _a !== void 0 ? _a : (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
-            };
-            for (const currentTest of tests.filter(test => test.pass)) {
-                const suite = getSuite();
-                this.processTest(suite, currentTest, 'success');
-            }
-            for (const currentTest of tests.filter(test => test.fail)) {
-                const suite = getSuite();
-                this.processTest(suite, currentTest, 'failed');
-            }
-            for (const currentTest of tests.filter(test => test.pending)) {
-                const suite = getSuite();
-                this.processTest(suite, currentTest, 'skipped');
-            }
+            suites.forEach(suite => {
+                const tests = suite.tests;
+                const getSuite = () => {
+                    var _a;
+                    const path = this.getRelativePath(filePath);
+                    return (_a = suitesMap[path]) !== null && _a !== void 0 ? _a : (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
+                };
+                const processPassingTests = () => tests
+                    .filter(test => test.pass)
+                    .forEach(passingTest => {
+                    const suite = getSuite();
+                    this.processTest(suite, passingTest, 'success');
+                });
+                const processFailingTests = () => tests
+                    .filter(test => test.fail)
+                    .forEach(failingTest => {
+                    const suite = getSuite();
+                    this.processTest(suite, failingTest, 'failed');
+                });
+                const processPendingTests = () => tests
+                    .filter(test => test.pending)
+                    .forEach(pendingTest => {
+                    const suite = getSuite();
+                    this.processTest(suite, pendingTest, 'skipped');
+                });
+                processPassingTests();
+                processFailingTests();
+                processPendingTests();
+                let innerSuiteIterator = 0;
+                const processInnerSuites = () => {
+                    const innerSuite = suite.suites[innerSuiteIterator];
+                    if (innerSuite) {
+                        const innerSuites = innerSuite.suites;
+                        processPassingTests();
+                        processFailingTests();
+                        processPendingTests();
+                        if ((innerSuites === null || innerSuites === void 0 ? void 0 : innerSuites.length) > 0) {
+                            innerSuites.forEach(innerSuite => {
+                                processPassingTests();
+                                processFailingTests();
+                                processPendingTests();
+                                processInnerSuites();
+                            });
+                        }
+                        else {
+                            innerSuiteIterator++;
+                        }
+                    }
+                };
+                processInnerSuites();
+            });
         }
-        const suites = Object.values(suitesMap);
-        return new test_results_1.TestRunResult(resultsPath, suites, mochawesome.stats.duration);
+        const mappedSuites = Object.values(suitesMap);
+        return new test_results_1.TestRunResult(resultsPath, mappedSuites, mochawesome.stats.duration);
     }
     processTest(suite, test, result) {
         var _a;
@@ -15650,7 +15683,7 @@ var isWin32 = __nccwpck_require__(2087).platform() === 'win32';
 
 var slash = '/';
 var backslash = /\\/g;
-var enclosure = /[\{\[].*[\/]*.*[\}\]]$/;
+var enclosure = /[\{\[].*[\}\]]$/;
 var globby = /(^|[^\\])([\{\[]|\([^\)]+$)/;
 var escaped = /\\([\!\*\?\|\[\]\(\)\{\}])/g;
 
@@ -15658,6 +15691,7 @@ var escaped = /\\([\!\*\?\|\[\]\(\)\{\}])/g;
  * @param {string} str
  * @param {Object} opts
  * @param {boolean} [opts.flipBackslashes=true]
+ * @returns {string}
  */
 module.exports = function globParent(str, opts) {
   var options = Object.assign({ flipBackslashes: true }, opts);

@@ -14,6 +14,7 @@ export interface MochawesomeJsonResult {
 
 export interface MochawesomeJsonSuite {
   tests: MochawesomeJsonTest[]
+  suites: MochawesomeJsonSuite[]
 }
 
 export interface MochawesomeJsonTest {

@@ -15,6 +15,30 @@ TestRunResult {
               "result": "success",
               "time": 0,
             },
+            TestCaseResult {
+              "error": undefined,
+              "name": "Passing test",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+        TestGroupResult {
+          "name": "Test 2",
+          "tests": Array [
+            TestCaseResult {
+              "error": Object {
+                "details": "Error: Some error
+    at Context.<anonymous> (test/main.test.js:22:11)
+    at processImmediate (node:internal/timers:464:21)",
+                "line": 22,
+                "message": "Error: Some error",
+                "path": "test/main.test.js",
+              },
+              "name": "Exception in test",
+              "result": "failed",
+              "time": 0,
+            },
           ],
         },
       ],

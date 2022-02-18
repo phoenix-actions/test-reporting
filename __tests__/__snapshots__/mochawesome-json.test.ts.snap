@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mochawesome-json tests report from ./reports/mochawesome-json test results matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/mochawesome-json.json",
+  "suites": Array [
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "Mocha Works?",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "Mocha Run test",
+              "result": "success",
+              "time": 1,
+            },
+            TestCaseResult {
+              "error": Object {
+                "details": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ -1
+- 'Failed to find'
+    at Context.<anonymous> (specs\\\\search_basic.js:7:16)
+    at processImmediate (internal/timers.js:462:21)",
+                "line": undefined,
+                "message": "AssertionError: Expected values to be strictly equal:
++ actual - expected
+
++ -1
+- 'Failed to find'",
+                "path": undefined,
+              },
+              "name": "Should return -1 if value not present",
+              "result": "failed",
+              "time": 3,
+            },
+          ],
+        },
+      ],
+      "name": "",
+      "totalTime": undefined,
+    },
+  ],
+  "totalTime": 31,
+}
+`;

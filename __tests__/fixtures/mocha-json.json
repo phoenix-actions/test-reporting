@@ -1,0 +1,158 @@
+{
+  "stats": {
+    "suites": 3,
+    "tests": 6,
+    "passes": 1,
+    "pending": 1,
+    "failures": 4,
+    "start": "2022-02-18T14:30:07.077Z",
+    "end": "2022-02-18T14:30:07.088Z",
+    "duration": 11
+  },
+  "tests": [
+    {
+      "title": "Timeout test",
+      "fullTitle": "Timeout test",
+      "file": "/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/second.test.js",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: Timeout of 1ms exceeded. For async tests and hooks, ensure \"done()\" is called; if returning a Promise, ensure it resolves. (/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/second.test.js)\n    at listOnTimeout (node:internal/timers:557:17)\n    at processTimers (node:internal/timers:500:7)",
+        "message": "Timeout of 1ms exceeded. For async tests and hooks, ensure \"done()\" is called; if returning a Promise, ensure it resolves. (/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/second.test.js)",
+        "code": "ERR_MOCHA_TIMEOUT",
+        "timeout": 1,
+        "file": "/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/second.test.js"
+      }
+    },
+    {
+      "title": "Skipped test",
+      "fullTitle": "Skipped test",
+      "file": "/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/second.test.js",
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "Passing test",
+      "fullTitle": "Test 1 Passing test",
+      "file": "/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/main.test.js",
+      "duration": 0,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Failing test",
+      "fullTitle": "Test 1 Test 1.1 Failing test",
+      "file": "/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/main.test.js",
+      "duration": 3,
+      "currentRetry": 0,
+      "err": {
+        "stack": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n\n    at Context.<anonymous> (test/main.test.js:11:14)\n    at processImmediate (node:internal/timers:464:21)",
+        "message": "Expected values to be strictly equal:\n\nfalse !== true\n",
+        "generatedMessage": true,
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION",
+        "actual": "false",
+        "expected": "true",
+        "operator": "strictEqual"
+      }
+    },
+    {
+      "title": "Exception in target unit",
+      "fullTitle": "Test 1 Test 1.1 Exception in target unit",
+      "file": "/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/main.test.js",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: Some error\n    at Object.throwError (lib/main.js:2:9)\n    at Context.<anonymous> (test/main.test.js:15:11)\n    at processImmediate (node:internal/timers:464:21)",
+        "message": "Some error"
+      }
+    },
+    {
+      "title": "Exception in test",
+      "fullTitle": "Test 2 Exception in test",
+      "file": "/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/main.test.js",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: Some error\n    at Context.<anonymous> (test/main.test.js:22:11)\n    at processImmediate (node:internal/timers:464:21)",
+        "message": "Some error"
+      }
+    }
+  ],
+  "pending": [
+    {
+      "title": "Skipped test",
+      "fullTitle": "Skipped test",
+      "file": "/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/second.test.js",
+      "currentRetry": 0,
+      "err": {}
+    }
+  ],
+  "failures": [
+    {
+      "title": "Timeout test",
+      "fullTitle": "Timeout test",
+      "file": "/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/second.test.js",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: Timeout of 1ms exceeded. For async tests and hooks, ensure \"done()\" is called; if returning a Promise, ensure it resolves. (/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/second.test.js)\n    at listOnTimeout (node:internal/timers:557:17)\n    at processTimers (node:internal/timers:500:7)",
+        "message": "Timeout of 1ms exceeded. For async tests and hooks, ensure \"done()\" is called; if returning a Promise, ensure it resolves. (/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/second.test.js)",
+        "code": "ERR_MOCHA_TIMEOUT",
+        "timeout": 1,
+        "file": "/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/second.test.js"
+      }
+    },
+    {
+      "title": "Failing test",
+      "fullTitle": "Test 1 Test 1.1 Failing test",
+      "file": "/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/main.test.js",
+      "duration": 3,
+      "currentRetry": 0,
+      "err": {
+        "stack": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n\n    at Context.<anonymous> (test/main.test.js:11:14)\n    at processImmediate (node:internal/timers:464:21)",
+        "message": "Expected values to be strictly equal:\n\nfalse !== true\n",
+        "generatedMessage": true,
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION",
+        "actual": "false",
+        "expected": "true",
+        "operator": "strictEqual"
+      }
+    },
+    {
+      "title": "Exception in target unit",
+      "fullTitle": "Test 1 Test 1.1 Exception in target unit",
+      "file": "/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/main.test.js",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: Some error\n    at Object.throwError (lib/main.js:2:9)\n    at Context.<anonymous> (test/main.test.js:15:11)\n    at processImmediate (node:internal/timers:464:21)",
+        "message": "Some error"
+      }
+    },
+    {
+      "title": "Exception in test",
+      "fullTitle": "Test 2 Exception in test",
+      "file": "/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/main.test.js",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: Some error\n    at Context.<anonymous> (test/main.test.js:22:11)\n    at processImmediate (node:internal/timers:464:21)",
+        "message": "Some error"
+      }
+    }
+  ],
+  "passes": [
+    {
+      "title": "Passing test",
+      "fullTitle": "Test 1 Passing test",
+      "file": "/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/main.test.js",
+      "duration": 0,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    }
+  ]
+}

@@ -1,0 +1,258 @@
+{
+  "stats": {
+    "suites": 3,
+    "tests": 6,
+    "passes": 1,
+    "pending": 1,
+    "failures": 4,
+    "start": "2022-02-18T14:32:42.133Z",
+    "end": "2022-02-18T14:32:42.147Z",
+    "duration": 14,
+    "testsRegistered": 6,
+    "passPercent": 20,
+    "pendingPercent": 16.666666666666664,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "e74145e8-4f10-432c-8fe1-79fab8a0fe12",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [
+        {
+          "title": "Timeout test",
+          "fullTitle": "Timeout test",
+          "timedOut": true,
+          "duration": 3,
+          "state": "failed",
+          "speed": null,
+          "pass": false,
+          "fail": true,
+          "pending": false,
+          "context": null,
+          "code": "this.timeout(1);\nsetTimeout(done, 1000);",
+          "err": {
+            "message": "Error: Timeout of 1ms exceeded. For async tests and hooks, ensure \"done()\" is called; if returning a Promise, ensure it resolves. (/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mochawesome/test/second.test.js)",
+            "estack": "Error: Timeout of 1ms exceeded. For async tests and hooks, ensure \"done()\" is called; if returning a Promise, ensure it resolves. (/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mochawesome/test/second.test.js)\n    at listOnTimeout (node:internal/timers:557:17)\n    at processTimers (node:internal/timers:500:7)",
+            "diff": null
+          },
+          "uuid": "3ad24933-108e-426f-9cc3-0d71ab9f35c2",
+          "parentUUID": "e74145e8-4f10-432c-8fe1-79fab8a0fe12",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Skipped test",
+          "fullTitle": "Skipped test",
+          "timedOut": false,
+          "duration": 0,
+          "state": "pending",
+          "speed": null,
+          "pass": false,
+          "fail": false,
+          "pending": true,
+          "context": null,
+          "code": "",
+          "err": {},
+          "uuid": "f1b2a440-4080-44da-9346-bb5df85581e0",
+          "parentUUID": "e74145e8-4f10-432c-8fe1-79fab8a0fe12",
+          "isHook": false,
+          "skipped": false
+        }
+      ],
+      "suites": [
+        {
+          "uuid": "36bafd85-ff6a-4a77-920a-090deb0631c3",
+          "title": "Test 1",
+          "fullFile": "/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mochawesome/test/main.test.js",
+          "file": "/test/main.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Passing test",
+              "fullTitle": "Test 1 Passing test",
+              "timedOut": false,
+              "duration": 0,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "assert.equal(true, true)",
+              "err": {},
+              "uuid": "3ebb7382-adde-438c-9d31-694714656ac3",
+              "parentUUID": "36bafd85-ff6a-4a77-920a-090deb0631c3",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [
+            {
+              "uuid": "bd89b790-970b-41f8-965d-e67eae577576",
+              "title": "Test 1.1",
+              "fullFile": "/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mochawesome/test/main.test.js",
+              "file": "/test/main.test.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Failing test",
+                  "fullTitle": "Test 1 Test 1.1 Failing test",
+                  "timedOut": false,
+                  "duration": 2,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "assert.equal(false, true)",
+                  "err": {
+                    "message": "AssertionError: Expected values to be strictly equal:\n\nfalse !== true\n",
+                    "estack": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n\n    at Context.<anonymous> (test/main.test.js:11:14)\n    at processImmediate (node:internal/timers:464:21)",
+                    "diff": "- false\n+ true\n"
+                  },
+                  "uuid": "e154e320-a501-49bd-b0dc-fcdf8fb6460a",
+                  "parentUUID": "bd89b790-970b-41f8-965d-e67eae577576",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Exception in target unit",
+                  "fullTitle": "Test 1 Test 1.1 Exception in target unit",
+                  "timedOut": false,
+                  "duration": 0,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "lib.throwError();",
+                  "err": {
+                    "message": "Error: Some error",
+                    "estack": "Error: Some error\n    at Object.throwError (lib/main.js:2:9)\n    at Context.<anonymous> (test/main.test.js:15:11)\n    at processImmediate (node:internal/timers:464:21)",
+                    "diff": null
+                  },
+                  "uuid": "bee0d977-da09-43a9-9683-6e2676952f60",
+                  "parentUUID": "bd89b790-970b-41f8-965d-e67eae577576",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [],
+              "failures": [
+                "e154e320-a501-49bd-b0dc-fcdf8fb6460a",
+                "bee0d977-da09-43a9-9683-6e2676952f60"
+              ],
+              "pending": [],
+              "skipped": [],
+              "duration": 2,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [
+            "3ebb7382-adde-438c-9d31-694714656ac3"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "930f5258-1a08-44d1-8343-5782cb1e0f39",
+          "title": "Test 2",
+          "fullFile": "/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mochawesome/test/main.test.js",
+          "file": "/test/main.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Exception in test",
+              "fullTitle": "Test 2 Exception in test",
+              "timedOut": false,
+              "duration": 0,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "throw new Error('Some error');",
+              "err": {
+                "message": "Error: Some error",
+                "estack": "Error: Some error\n    at Context.<anonymous> (test/main.test.js:22:11)\n    at processImmediate (node:internal/timers:464:21)",
+                "diff": null
+              },
+              "uuid": "add99db1-a040-4ab8-86cf-91051665fb47",
+              "parentUUID": "930f5258-1a08-44d1-8343-5782cb1e0f39",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "add99db1-a040-4ab8-86cf-91051665fb47"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [
+        "3ad24933-108e-426f-9cc3-0d71ab9f35c2"
+      ],
+      "pending": [
+        "f1b2a440-4080-44da-9346-bb5df85581e0"
+      ],
+      "skipped": [],
+      "duration": 3,
+      "root": true,
+      "rootEmpty": false,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "9.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome-json.json",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.0.1"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "../../__tests__/fixtures/",
+        "reportFilename": "mochawesome-json.json"
+      },
+      "version": "6.0.1"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 name: Test Reporting
 description: |
-  Shows test results in GitHub UI: .NET (xUnit, NUnit, MSTest), Dart, Flutter, Java (JUnit), JavaScript (JEST, Mocha, Mochawesome)
+  Shows test results in GitHub UI: .NET (xUnit, NUnit, MSTest), Dart, Flutter, Java (JUnit), JavaScript (JEST, Mocha)
 author: Ian Moroney <ianmoroney@gmail.com>
 inputs:
   artifact:

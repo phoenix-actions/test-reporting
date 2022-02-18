@@ -7,6 +7,30 @@ TestRunResult {
     TestSuiteResult {
       "groups": Array [
         TestGroupResult {
+          "name": null,
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "Skipped test",
+              "result": "skipped",
+              "time": 0,
+            },
+            TestCaseResult {
+              "error": Object {
+                "details": "Error: Timeout of 1ms exceeded. For async tests and hooks, ensure \\"done()\\" is called; if returning a Promise, ensure it resolves. (/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mochawesome/test/second.test.js)
+    at listOnTimeout (node:internal/timers:557:17)
+    at processTimers (node:internal/timers:500:7)",
+                "line": undefined,
+                "message": "Error: Timeout of 1ms exceeded. For async tests and hooks, ensure \\"done()\\" is called; if returning a Promise, ensure it resolves. (/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mochawesome/test/second.test.js)",
+                "path": undefined,
+              },
+              "name": "Timeout test",
+              "result": "failed",
+              "time": 3,
+            },
+          ],
+        },
+        TestGroupResult {
           "name": "Test 1",
           "tests": Array [
             TestCaseResult {
@@ -15,11 +39,43 @@ TestRunResult {
               "result": "success",
               "time": 0,
             },
+          ],
+        },
+        TestGroupResult {
+          "name": "Test 1 Test 1.1",
+          "tests": Array [
             TestCaseResult {
-              "error": undefined,
-              "name": "Passing test",
-              "result": "success",
+              "error": Object {
+                "details": "Error: Some error
+    at Object.throwError (lib/main.js:2:9)
+    at Context.<anonymous> (test/main.test.js:15:11)
+    at processImmediate (node:internal/timers:464:21)",
+                "line": 2,
+                "message": "Error: Some error",
+                "path": "lib/main.js",
+              },
+              "name": "Exception in target unit",
+              "result": "failed",
               "time": 0,
+            },
+            TestCaseResult {
+              "error": Object {
+                "details": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+false !== true
+
+    at Context.<anonymous> (test/main.test.js:11:14)
+    at processImmediate (node:internal/timers:464:21)",
+                "line": 11,
+                "message": "AssertionError: Expected values to be strictly equal:
+
+false !== true
+",
+                "path": "test/main.test.js",
+              },
+              "name": "Failing test",
+              "result": "failed",
+              "time": 2,
             },
           ],
         },

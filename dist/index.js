@@ -1265,61 +1265,66 @@ class MochawesomeJsonParser {
         }
     }
     getTestRunResult(resultsPath, mochawesome) {
-        var _a;
         const suitesMap = {};
-        const suites = (_a = mochawesome.results[0]) === null || _a === void 0 ? void 0 : _a.suites;
+        const results = mochawesome.results[0];
+        const suites = results === null || results === void 0 ? void 0 : results.suites;
+        const filePath = results === null || results === void 0 ? void 0 : results.fullFile;
+        const suitelessTests = results === null || results === void 0 ? void 0 : results.tests;
+        const getSuite = () => {
+            var _a;
+            const path = this.getRelativePath(filePath);
+            return (_a = suitesMap[path]) !== null && _a !== void 0 ? _a : (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
+        };
+        const processPassingTests = (tests) => tests
+            .filter(test => test.pass)
+            .forEach(passingTest => {
+            const suite = getSuite();
+            this.processTest(suite, passingTest, 'success');
+        });
+        const processFailingTests = (tests) => tests
+            .filter(test => test.fail)
+            .forEach(failingTest => {
+            const suite = getSuite();
+            this.processTest(suite, failingTest, 'failed');
+        });
+        const processPendingTests = (tests) => tests
+            .filter(test => test.pending)
+            .forEach(pendingTest => {
+            const suite = getSuite();
+            this.processTest(suite, pendingTest, 'skipped');
+        });
+        const processAllTests = (tests) => {
+            processPassingTests(tests);
+            processFailingTests(tests);
+            processPendingTests(tests);
+        };
+        // Process tests that aren't in a suite
+        if ((suitelessTests === null || suitelessTests === void 0 ? void 0 : suitelessTests.length) > 0) {
+            processAllTests(suitelessTests);
+        }
+        // Process tests that are in a suite
         if ((suites === null || suites === void 0 ? void 0 : suites.length) > 0) {
-            const filePath = mochawesome.results[0].fullFile;
             suites.forEach(suite => {
-                const tests = suite.tests;
-                const getSuite = () => {
-                    var _a;
-                    const path = this.getRelativePath(filePath);
-                    return (_a = suitesMap[path]) !== null && _a !== void 0 ? _a : (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
-                };
-                const processPassingTests = () => tests
-                    .filter(test => test.pass)
-                    .forEach(passingTest => {
-                    const suite = getSuite();
-                    this.processTest(suite, passingTest, 'success');
-                });
-                const processFailingTests = () => tests
-                    .filter(test => test.fail)
-                    .forEach(failingTest => {
-                    const suite = getSuite();
-                    this.processTest(suite, failingTest, 'failed');
-                });
-                const processPendingTests = () => tests
-                    .filter(test => test.pending)
-                    .forEach(pendingTest => {
-                    const suite = getSuite();
-                    this.processTest(suite, pendingTest, 'skipped');
-                });
-                processPassingTests();
-                processFailingTests();
-                processPendingTests();
-                let innerSuiteIterator = 0;
-                const processInnerSuites = () => {
-                    const innerSuite = suite.suites[innerSuiteIterator];
+                // Process suite tests
+                processAllTests(suite.tests);
+                let nestedSuiteIterator = 0;
+                // Handle nested suites
+                const processNestedSuites = () => {
+                    const innerSuite = suite.suites[nestedSuiteIterator];
                     if (innerSuite) {
+                        // Process inner suite tests
+                        processAllTests(innerSuite.tests);
                         const innerSuites = innerSuite.suites;
-                        processPassingTests();
-                        processFailingTests();
-                        processPendingTests();
+                        // If the inner suite has more suites, recursion
                         if ((innerSuites === null || innerSuites === void 0 ? void 0 : innerSuites.length) > 0) {
-                            innerSuites.forEach(innerSuite => {
-                                processPassingTests();
-                                processFailingTests();
-                                processPendingTests();
-                                processInnerSuites();
-                            });
+                            processNestedSuites();
                         }
                         else {
-                            innerSuiteIterator++;
+                            nestedSuiteIterator++;
                         }
                     }
                 };
-                processInnerSuites();
+                processNestedSuites();
             });
         }
         const mappedSuites = Object.values(suitesMap);

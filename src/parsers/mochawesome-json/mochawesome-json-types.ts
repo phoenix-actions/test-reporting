@@ -8,8 +8,10 @@ export interface MochawesomeJsonStat {
 }
 
 export interface MochawesomeJsonResult {
+  tests: MochawesomeJsonTest[]
   suites: MochawesomeJsonSuite[]
   fullFile: string
+  title: string
 }
 
 export interface MochawesomeJsonSuite {

@@ -1,3 +1,4 @@
+/* eslint-disable github/array-foreach */
 import {ParseOptions, TestParser} from '../../test-parser'
 import {
   TestCaseError,
@@ -33,16 +34,18 @@ export class MochawesomeJsonParser implements TestParser {
 
   private getTestRunResult(resultsPath: string, mochawesome: MochawesomeJson): TestRunResult {
     const suitesMap: {[path: string]: TestSuiteResult} = {}
+
     const results = mochawesome.results[0]
     const suites = results?.suites
-    const filePath = results.fullFile
+    const filePath = results?.fullFile
+    const suitelessTests = results?.tests
 
     const getSuite = (): TestSuiteResult => {
       const path = this.getRelativePath(filePath)
       return suitesMap[path] ?? (suitesMap[path] = new TestSuiteResult(path, []))
     }
 
-    const processPassingTests = (tests: MochawesomeJsonTest[]) =>
+    const processPassingTests = (tests: MochawesomeJsonTest[]): void =>
       tests
         .filter(test => test.pass)
         .forEach(passingTest => {
@@ -50,7 +53,7 @@ export class MochawesomeJsonParser implements TestParser {
           this.processTest(suite, passingTest, 'success')
         })
 
-    const processFailingTests = (tests: MochawesomeJsonTest[]) =>
+    const processFailingTests = (tests: MochawesomeJsonTest[]): void =>
       tests
         .filter(test => test.fail)
         .forEach(failingTest => {
@@ -58,7 +61,7 @@ export class MochawesomeJsonParser implements TestParser {
           this.processTest(suite, failingTest, 'failed')
         })
 
-    const processPendingTests = (tests: MochawesomeJsonTest[]) =>
+    const processPendingTests = (tests: MochawesomeJsonTest[]): void =>
       tests
         .filter(test => test.pending)
         .forEach(pendingTest => {
@@ -66,36 +69,45 @@ export class MochawesomeJsonParser implements TestParser {
           this.processTest(suite, pendingTest, 'skipped')
         })
 
+    const processAllTests = (tests: MochawesomeJsonTest[]): void => {
+      processPassingTests(tests)
+      processFailingTests(tests)
+      processPendingTests(tests)
+    }
+
+    // Process tests that aren't in a suite
+    if (suitelessTests?.length > 0) {
+      processAllTests(suitelessTests)
+    }
+
+    // Process tests that are in a suite
     if (suites?.length > 0) {
       suites.forEach(suite => {
         // Process suite tests
-        processPassingTests(suite.tests)
-        processFailingTests(suite.tests)
-        processPendingTests(suite.tests)
+        processAllTests(suite.tests)
 
-        let innerSuiteIterator = 0
+        let nestedSuiteIterator = 0
 
-        const processInnerSuites = () => {
-          const innerSuite = suite.suites[innerSuiteIterator]
+        // Handle nested suites
+        const processNestedSuites = (): void => {
+          const innerSuite = suite.suites[nestedSuiteIterator]
 
           if (innerSuite) {
             // Process inner suite tests
-            processPassingTests(innerSuite.tests)
-            processFailingTests(innerSuite.tests)
-            processPendingTests(innerSuite.tests)
+            processAllTests(innerSuite.tests)
 
             const innerSuites = innerSuite.suites
 
             // If the inner suite has more suites, recursion
             if (innerSuites?.length > 0) {
-              processInnerSuites()
+              processNestedSuites()
             } else {
-              innerSuiteIterator++
+              nestedSuiteIterator++
             }
           }
         }
 
-        processInnerSuites()
+        processNestedSuites()
       })
     }
 

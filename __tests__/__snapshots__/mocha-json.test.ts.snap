@@ -23,9 +23,9 @@ TestRunResult {
             TestCaseResult {
               "error": Object {
                 "details": "Error: Some error
-    at Object.throwError (lib\\\\main.js:2:9)
-    at Context.<anonymous> (test\\\\main.test.js:15:11)
-    at processImmediate (internal/timers.js:461:21)",
+    at Object.throwError (lib/main.js:2:9)
+    at Context.<anonymous> (test/main.test.js:15:11)
+    at processImmediate (node:internal/timers:464:21)",
                 "line": 2,
                 "message": "Some error",
                 "path": "lib/main.js",
@@ -40,8 +40,8 @@ TestRunResult {
 
 false !== true
 
-    at Context.<anonymous> (test\\\\main.test.js:11:14)
-    at processImmediate (internal/timers.js:461:21)",
+    at Context.<anonymous> (test/main.test.js:11:14)
+    at processImmediate (node:internal/timers:464:21)",
                 "line": 11,
                 "message": "Expected values to be strictly equal:
 
@@ -51,7 +51,7 @@ false !== true
               },
               "name": "Failing test",
               "result": "failed",
-              "time": 1,
+              "time": 3,
             },
           ],
         },
@@ -61,8 +61,8 @@ false !== true
             TestCaseResult {
               "error": Object {
                 "details": "Error: Some error
-    at Context.<anonymous> (test\\\\main.test.js:22:11)
-    at processImmediate (internal/timers.js:461:21)",
+    at Context.<anonymous> (test/main.test.js:22:11)
+    at processImmediate (node:internal/timers:464:21)",
                 "line": 22,
                 "message": "Some error",
                 "path": "test/main.test.js",
@@ -90,16 +90,16 @@ false !== true
             },
             TestCaseResult {
               "error": Object {
-                "details": "Error: Timeout of 1ms exceeded. For async tests and hooks, ensure \\"done()\\" is called; if returning a Promise, ensure it resolves. (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-reporting\\\\reports\\\\mocha\\\\test\\\\second.test.js)
-    at listOnTimeout (internal/timers.js:554:17)
-    at processTimers (internal/timers.js:497:7)",
+                "details": "Error: Timeout of 1ms exceeded. For async tests and hooks, ensure \\"done()\\" is called; if returning a Promise, ensure it resolves. (/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/second.test.js)
+    at listOnTimeout (node:internal/timers:557:17)
+    at processTimers (node:internal/timers:500:7)",
                 "line": undefined,
-                "message": "Timeout of 1ms exceeded. For async tests and hooks, ensure \\"done()\\" is called; if returning a Promise, ensure it resolves. (C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-reporting\\\\reports\\\\mocha\\\\test\\\\second.test.js)",
+                "message": "Timeout of 1ms exceeded. For async tests and hooks, ensure \\"done()\\" is called; if returning a Promise, ensure it resolves. (/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mocha/test/second.test.js)",
                 "path": undefined,
               },
               "name": "Timeout test",
               "result": "failed",
-              "time": 8,
+              "time": 2,
             },
           ],
         },
@@ -108,7 +108,7 @@ false !== true
       "totalTime": undefined,
     },
   ],
-  "totalTime": 12,
+  "totalTime": 11,
 }
 `;
 

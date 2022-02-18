@@ -30,6 +30,12 @@ TestRunResult {
             },
           ],
         },
+      ],
+      "name": "",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
         TestGroupResult {
           "name": "Test 1",
           "tests": Array [
@@ -98,7 +104,7 @@ false !== true
           ],
         },
       ],
-      "name": "",
+      "name": "test/main.test.js",
       "totalTime": undefined,
     },
   ],

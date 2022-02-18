@@ -40,39 +40,39 @@ export class MochawesomeJsonParser implements TestParser {
     const filePath = results?.fullFile
     const suitelessTests = results?.tests
 
-    const getSuite = (): TestSuiteResult => {
-      const path = this.getRelativePath(filePath)
+    const getSuite = (fullFile?: string): TestSuiteResult => {
+      const path = this.getRelativePath(fullFile ?? filePath)
       return suitesMap[path] ?? (suitesMap[path] = new TestSuiteResult(path, []))
     }
 
-    const processPassingTests = (tests: MochawesomeJsonTest[]): void =>
+    const processPassingTests = (tests: MochawesomeJsonTest[], fullFile?: string): void =>
       tests
         .filter(test => test.pass)
         .forEach(passingTest => {
-          const suite = getSuite()
+          const suite = getSuite(fullFile)
           this.processTest(suite, passingTest, 'success')
         })
 
-    const processFailingTests = (tests: MochawesomeJsonTest[]): void =>
+    const processFailingTests = (tests: MochawesomeJsonTest[], fullFile?: string): void =>
       tests
         .filter(test => test.fail)
         .forEach(failingTest => {
-          const suite = getSuite()
+          const suite = getSuite(fullFile)
           this.processTest(suite, failingTest, 'failed')
         })
 
-    const processPendingTests = (tests: MochawesomeJsonTest[]): void =>
+    const processPendingTests = (tests: MochawesomeJsonTest[], fullFile?: string): void =>
       tests
         .filter(test => test.pending)
         .forEach(pendingTest => {
-          const suite = getSuite()
+          const suite = getSuite(fullFile)
           this.processTest(suite, pendingTest, 'skipped')
         })
 
-    const processAllTests = (tests: MochawesomeJsonTest[]): void => {
-      processPassingTests(tests)
-      processFailingTests(tests)
-      processPendingTests(tests)
+    const processAllTests = (tests: MochawesomeJsonTest[], fullFile?: string): void => {
+      processPassingTests(tests, fullFile)
+      processFailingTests(tests, fullFile)
+      processPendingTests(tests, fullFile)
     }
 
     // Process tests that aren't in a suite
@@ -82,9 +82,9 @@ export class MochawesomeJsonParser implements TestParser {
 
     // Process tests that are in a suite
     if (suites?.length > 0) {
-      suites.forEach(suite => {
+      for (const suite of suites) {
         // Process suite tests
-        processAllTests(suite.tests)
+        processAllTests(suite.tests, suite.fullFile)
 
         let nestedSuiteIterator = 0
 
@@ -93,12 +93,12 @@ export class MochawesomeJsonParser implements TestParser {
           const innerSuite = suite.suites[nestedSuiteIterator]
 
           if (innerSuite) {
-            // Process inner suite tests
-            processAllTests(innerSuite.tests)
+            // Process nested suite tests
+            processAllTests(innerSuite.tests, innerSuite.fullFile)
 
             const innerSuites = innerSuite.suites
 
-            // If the inner suite has more suites, recursion
+            // If the nested suite has more suites, recursion
             if (innerSuites?.length > 0) {
               processNestedSuites()
             } else {
@@ -108,7 +108,7 @@ export class MochawesomeJsonParser implements TestParser {
         }
 
         processNestedSuites()
-      })
+      }
     }
 
     const mappedSuites = Object.values(suitesMap)

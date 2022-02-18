@@ -1270,33 +1270,33 @@ class MochawesomeJsonParser {
         const suites = results === null || results === void 0 ? void 0 : results.suites;
         const filePath = results === null || results === void 0 ? void 0 : results.fullFile;
         const suitelessTests = results === null || results === void 0 ? void 0 : results.tests;
-        const getSuite = () => {
+        const getSuite = (fullFile) => {
             var _a;
-            const path = this.getRelativePath(filePath);
+            const path = this.getRelativePath(fullFile !== null && fullFile !== void 0 ? fullFile : filePath);
             return (_a = suitesMap[path]) !== null && _a !== void 0 ? _a : (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
         };
-        const processPassingTests = (tests) => tests
+        const processPassingTests = (tests, fullFile) => tests
             .filter(test => test.pass)
             .forEach(passingTest => {
-            const suite = getSuite();
+            const suite = getSuite(fullFile);
             this.processTest(suite, passingTest, 'success');
         });
-        const processFailingTests = (tests) => tests
+        const processFailingTests = (tests, fullFile) => tests
             .filter(test => test.fail)
             .forEach(failingTest => {
-            const suite = getSuite();
+            const suite = getSuite(fullFile);
             this.processTest(suite, failingTest, 'failed');
         });
-        const processPendingTests = (tests) => tests
+        const processPendingTests = (tests, fullFile) => tests
             .filter(test => test.pending)
             .forEach(pendingTest => {
-            const suite = getSuite();
+            const suite = getSuite(fullFile);
             this.processTest(suite, pendingTest, 'skipped');
         });
-        const processAllTests = (tests) => {
-            processPassingTests(tests);
-            processFailingTests(tests);
-            processPendingTests(tests);
+        const processAllTests = (tests, fullFile) => {
+            processPassingTests(tests, fullFile);
+            processFailingTests(tests, fullFile);
+            processPendingTests(tests, fullFile);
         };
         // Process tests that aren't in a suite
         if ((suitelessTests === null || suitelessTests === void 0 ? void 0 : suitelessTests.length) > 0) {
@@ -1304,18 +1304,18 @@ class MochawesomeJsonParser {
         }
         // Process tests that are in a suite
         if ((suites === null || suites === void 0 ? void 0 : suites.length) > 0) {
-            suites.forEach(suite => {
+            for (const suite of suites) {
                 // Process suite tests
-                processAllTests(suite.tests);
+                processAllTests(suite.tests, suite.fullFile);
                 let nestedSuiteIterator = 0;
                 // Handle nested suites
                 const processNestedSuites = () => {
                     const innerSuite = suite.suites[nestedSuiteIterator];
                     if (innerSuite) {
-                        // Process inner suite tests
-                        processAllTests(innerSuite.tests);
+                        // Process nested suite tests
+                        processAllTests(innerSuite.tests, innerSuite.fullFile);
                         const innerSuites = innerSuite.suites;
-                        // If the inner suite has more suites, recursion
+                        // If the nested suite has more suites, recursion
                         if ((innerSuites === null || innerSuites === void 0 ? void 0 : innerSuites.length) > 0) {
                             processNestedSuites();
                         }
@@ -1325,7 +1325,7 @@ class MochawesomeJsonParser {
                     }
                 };
                 processNestedSuites();
-            });
+            }
         }
         const mappedSuites = Object.values(suitesMap);
         return new test_results_1.TestRunResult(resultsPath, mappedSuites, mochawesome.stats.duration);

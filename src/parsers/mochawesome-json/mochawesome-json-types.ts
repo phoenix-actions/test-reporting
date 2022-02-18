@@ -17,6 +17,7 @@ export interface MochawesomeJsonResult {
 export interface MochawesomeJsonSuite {
   tests: MochawesomeJsonTest[]
   suites: MochawesomeJsonSuite[]
+  fullFile: string
 }
 
 export interface MochawesomeJsonTest {

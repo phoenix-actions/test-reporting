@@ -19,9 +19,9 @@
   "results": [
     {
       "uuid": "e74145e8-4f10-432c-8fe1-79fab8a0fe12",
-      "title": "",
-      "fullFile": "",
-      "file": "",
+      "title": "In-line test with no file",
+      "fullFile": "nofile",
+      "file": "nofile",
       "beforeHooks": [],
       "afterHooks": [],
       "tests": [

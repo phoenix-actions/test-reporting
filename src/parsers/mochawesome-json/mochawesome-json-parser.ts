@@ -9,7 +9,7 @@ import {
 } from '../../test-results'
 import {getExceptionSource} from '../../utils/node-utils'
 import {getBasePath, normalizeFilePath} from '../../utils/path-utils'
-import {MochawesomeJson, MochawesomeJsonTest} from './mochawesome-json-types'
+import {MochawesomeJson, MochawesomeJsonSuite, MochawesomeJsonTest} from './mochawesome-json-types'
 
 export class MochawesomeJsonParser implements TestParser {
   assumedWorkDir: string | undefined
@@ -82,34 +82,30 @@ export class MochawesomeJsonParser implements TestParser {
       processAllTests(suitelessTests)
     }
 
+    // Handle nested suites
+    const processNestedSuites = (suite: MochawesomeJsonSuite, nestedSuiteIndex: number): void => {
+      // Process suite tests
+      processAllTests(suite.tests, suite.fullFile)
+
+      for (const innerSuite of suite.suites) {
+        // Process inner suite tests
+        processAllTests(innerSuite.tests, innerSuite.fullFile)
+
+        if (innerSuite?.suites[nestedSuiteIndex]?.suites.length > 0) {
+          processNestedSuites(innerSuite, 0)
+        } else {
+          processAllTests(innerSuite?.suites[nestedSuiteIndex].tests, innerSuite?.suites[nestedSuiteIndex].fullFile)
+          nestedSuiteIndex++
+
+          // TODO - Figure out how to get 1.1.1.1.2
+        }
+      }
+    }
+
     // Process tests that are in a suite
     if (suites?.length > 0) {
       for (const suite of suites) {
-        // Process suite tests
-        processAllTests(suite.tests, suite.fullFile)
-
-        let nestedSuiteIterator = 0
-
-        // Handle nested suites
-        const processNestedSuites = (): void => {
-          const innerSuite = suite.suites[nestedSuiteIterator]
-
-          if (innerSuite) {
-            // Process nested suite tests
-            processAllTests(innerSuite.tests, innerSuite.fullFile)
-
-            const innerSuites = innerSuite.suites
-
-            // If the nested suite has more suites, recursion
-            if (innerSuites?.length > 0) {
-              processNestedSuites()
-            } else {
-              nestedSuiteIterator++
-            }
-          }
-        }
-
-        processNestedSuites()
+        processNestedSuites(suite, 0)
       }
     }
 

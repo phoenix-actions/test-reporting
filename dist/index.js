@@ -1275,24 +1275,27 @@ class MochawesomeJsonParser {
             const path = this.getRelativePath(fullFile !== null && fullFile !== void 0 ? fullFile : filePath);
             return (_a = suitesMap[path]) !== null && _a !== void 0 ? _a : (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
         };
-        const processPassingTests = (tests, fullFile) => tests
-            .filter(test => test.pass)
-            .forEach(passingTest => {
-            const suite = getSuite(fullFile);
-            this.processTest(suite, passingTest, 'success');
-        });
-        const processFailingTests = (tests, fullFile) => tests
-            .filter(test => test.fail)
-            .forEach(failingTest => {
-            const suite = getSuite(fullFile);
-            this.processTest(suite, failingTest, 'failed');
-        });
-        const processPendingTests = (tests, fullFile) => tests
-            .filter(test => test.pending)
-            .forEach(pendingTest => {
-            const suite = getSuite(fullFile);
-            this.processTest(suite, pendingTest, 'skipped');
-        });
+        const processPassingTests = (tests, fullFile) => {
+            const passingTests = tests.filter(test => test.pass);
+            for (const passingTest of passingTests) {
+                const suite = getSuite(fullFile);
+                this.processTest(suite, passingTest, 'success');
+            }
+        };
+        const processFailingTests = (tests, fullFile) => {
+            const failingTests = tests.filter(test => test.fail);
+            for (const failingTest of failingTests) {
+                const suite = getSuite(fullFile);
+                this.processTest(suite, failingTest, 'failed');
+            }
+        };
+        const processPendingTests = (tests, fullFile) => {
+            const pendingTests = tests.filter(test => test.pending);
+            for (const pendingTest of pendingTests) {
+                const suite = getSuite(fullFile);
+                this.processTest(suite, pendingTest, 'skipped');
+            }
+        };
         const processAllTests = (tests, fullFile) => {
             processPassingTests(tests, fullFile);
             processFailingTests(tests, fullFile);

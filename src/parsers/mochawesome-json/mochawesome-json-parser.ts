@@ -1,4 +1,3 @@
-/* eslint-disable github/array-foreach */
 import {ParseOptions, TestParser} from '../../test-parser'
 import {
   TestCaseError,
@@ -45,29 +44,32 @@ export class MochawesomeJsonParser implements TestParser {
       return suitesMap[path] ?? (suitesMap[path] = new TestSuiteResult(path, []))
     }
 
-    const processPassingTests = (tests: MochawesomeJsonTest[], fullFile?: string): void =>
-      tests
-        .filter(test => test.pass)
-        .forEach(passingTest => {
-          const suite = getSuite(fullFile)
-          this.processTest(suite, passingTest, 'success')
-        })
+    const processPassingTests = (tests: MochawesomeJsonTest[], fullFile?: string): void => {
+      const passingTests = tests.filter(test => test.pass)
 
-    const processFailingTests = (tests: MochawesomeJsonTest[], fullFile?: string): void =>
-      tests
-        .filter(test => test.fail)
-        .forEach(failingTest => {
-          const suite = getSuite(fullFile)
-          this.processTest(suite, failingTest, 'failed')
-        })
+      for (const passingTest of passingTests) {
+        const suite = getSuite(fullFile)
+        this.processTest(suite, passingTest, 'success')
+      }
+    }
 
-    const processPendingTests = (tests: MochawesomeJsonTest[], fullFile?: string): void =>
-      tests
-        .filter(test => test.pending)
-        .forEach(pendingTest => {
-          const suite = getSuite(fullFile)
-          this.processTest(suite, pendingTest, 'skipped')
-        })
+    const processFailingTests = (tests: MochawesomeJsonTest[], fullFile?: string): void => {
+      const failingTests = tests.filter(test => test.fail)
+
+      for (const failingTest of failingTests) {
+        const suite = getSuite(fullFile)
+        this.processTest(suite, failingTest, 'failed')
+      }
+    }
+
+    const processPendingTests = (tests: MochawesomeJsonTest[], fullFile?: string): void => {
+      const pendingTests = tests.filter(test => test.pending)
+
+      for (const pendingTest of pendingTests) {
+        const suite = getSuite(fullFile)
+        this.processTest(suite, pendingTest, 'skipped')
+      }
+    }
 
     const processAllTests = (tests: MochawesomeJsonTest[], fullFile?: string): void => {
       processPassingTests(tests, fullFile)

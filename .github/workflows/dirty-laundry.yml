@@ -1,0 +1,29 @@
+name: 'Dirty Laundry Test'
+on:
+  pull_request:
+    paths-ignore: [ '**.md' ]
+  push:
+    paths-ignore: [ '**.md' ]
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: npm run build
+      - run: npm run format-check
+      - run: npm run lint
+
+      - name: Create mochawesome report
+        uses: ./
+        if: success() || failure()
+        with:
+          name: Mochawesome Tests
+          path: __tests__/fixtures/mochawesome1-json.json
+          reporter: mochawesome-json
+          fail-on-error: false

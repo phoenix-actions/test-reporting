@@ -1276,24 +1276,30 @@ class MochawesomeJsonParser {
             return (_a = suitesMap[path]) !== null && _a !== void 0 ? _a : (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
         };
         const processPassingTests = (tests, fullFile) => {
-            const passingTests = tests.filter(test => test.pass);
-            for (const passingTest of passingTests) {
-                const suite = getSuite(fullFile);
-                this.processTest(suite, passingTest, 'success');
+            const passingTests = tests === null || tests === void 0 ? void 0 : tests.filter(test => test.pass);
+            if (passingTests) {
+                for (const passingTest of passingTests) {
+                    const suite = getSuite(fullFile);
+                    this.processTest(suite, passingTest, 'success');
+                }
             }
         };
         const processFailingTests = (tests, fullFile) => {
-            const failingTests = tests.filter(test => test.fail);
-            for (const failingTest of failingTests) {
-                const suite = getSuite(fullFile);
-                this.processTest(suite, failingTest, 'failed');
+            const failingTests = tests === null || tests === void 0 ? void 0 : tests.filter(test => test.fail);
+            if (failingTests) {
+                for (const failingTest of failingTests) {
+                    const suite = getSuite(fullFile);
+                    this.processTest(suite, failingTest, 'failed');
+                }
             }
         };
         const processPendingTests = (tests, fullFile) => {
-            const pendingTests = tests.filter(test => test.pending);
-            for (const pendingTest of pendingTests) {
-                const suite = getSuite(fullFile);
-                this.processTest(suite, pendingTest, 'skipped');
+            const pendingTests = tests === null || tests === void 0 ? void 0 : tests.filter(test => test.pending);
+            if (pendingTests) {
+                for (const pendingTest of pendingTests) {
+                    const suite = getSuite(fullFile);
+                    this.processTest(suite, pendingTest, 'skipped');
+                }
             }
         };
         const processAllTests = (tests, fullFile) => {
@@ -1305,29 +1311,28 @@ class MochawesomeJsonParser {
         if ((suitelessTests === null || suitelessTests === void 0 ? void 0 : suitelessTests.length) > 0) {
             processAllTests(suitelessTests);
         }
+        // Handle nested suites
+        const processNestedSuites = (suite, nestedSuiteIndex) => {
+            var _a, _b, _c;
+            // Process suite tests
+            processAllTests(suite.tests, suite.fullFile);
+            for (const innerSuite of suite.suites) {
+                // Process inner suite tests
+                processAllTests(innerSuite.tests, innerSuite.fullFile);
+                if (((_a = innerSuite === null || innerSuite === void 0 ? void 0 : innerSuite.suites[nestedSuiteIndex]) === null || _a === void 0 ? void 0 : _a.suites.length) > 0) {
+                    processNestedSuites(innerSuite, 0);
+                }
+                else {
+                    processAllTests((_b = innerSuite === null || innerSuite === void 0 ? void 0 : innerSuite.suites[nestedSuiteIndex]) === null || _b === void 0 ? void 0 : _b.tests, (_c = innerSuite === null || innerSuite === void 0 ? void 0 : innerSuite.suites[nestedSuiteIndex]) === null || _c === void 0 ? void 0 : _c.fullFile);
+                    nestedSuiteIndex++;
+                    // TODO - Figure out how to get 1.1.1.1.2
+                }
+            }
+        };
         // Process tests that are in a suite
         if ((suites === null || suites === void 0 ? void 0 : suites.length) > 0) {
             for (const suite of suites) {
-                // Process suite tests
-                processAllTests(suite.tests, suite.fullFile);
-                let nestedSuiteIterator = 0;
-                // Handle nested suites
-                const processNestedSuites = () => {
-                    const innerSuite = suite.suites[nestedSuiteIterator];
-                    if (innerSuite) {
-                        // Process nested suite tests
-                        processAllTests(innerSuite.tests, innerSuite.fullFile);
-                        const innerSuites = innerSuite.suites;
-                        // If the nested suite has more suites, recursion
-                        if ((innerSuites === null || innerSuites === void 0 ? void 0 : innerSuites.length) > 0) {
-                            processNestedSuites();
-                        }
-                        else {
-                            nestedSuiteIterator++;
-                        }
-                    }
-                };
-                processNestedSuites();
+                processNestedSuites(suite, 0);
             }
         }
         const mappedSuites = Object.values(suitesMap);

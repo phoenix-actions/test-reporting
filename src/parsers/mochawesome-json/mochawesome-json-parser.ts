@@ -45,29 +45,35 @@ export class MochawesomeJsonParser implements TestParser {
     }
 
     const processPassingTests = (tests: MochawesomeJsonTest[], fullFile?: string): void => {
-      const passingTests = tests.filter(test => test.pass)
+      const passingTests = tests?.filter(test => test.pass)
 
-      for (const passingTest of passingTests) {
-        const suite = getSuite(fullFile)
-        this.processTest(suite, passingTest, 'success')
+      if (passingTests) {
+        for (const passingTest of passingTests) {
+          const suite = getSuite(fullFile)
+          this.processTest(suite, passingTest, 'success')
+        }
       }
     }
 
     const processFailingTests = (tests: MochawesomeJsonTest[], fullFile?: string): void => {
-      const failingTests = tests.filter(test => test.fail)
+      const failingTests = tests?.filter(test => test.fail)
 
-      for (const failingTest of failingTests) {
-        const suite = getSuite(fullFile)
-        this.processTest(suite, failingTest, 'failed')
+      if (failingTests) {
+        for (const failingTest of failingTests) {
+          const suite = getSuite(fullFile)
+          this.processTest(suite, failingTest, 'failed')
+        }
       }
     }
 
     const processPendingTests = (tests: MochawesomeJsonTest[], fullFile?: string): void => {
-      const pendingTests = tests.filter(test => test.pending)
+      const pendingTests = tests?.filter(test => test.pending)
 
-      for (const pendingTest of pendingTests) {
-        const suite = getSuite(fullFile)
-        this.processTest(suite, pendingTest, 'skipped')
+      if (pendingTests) {
+        for (const pendingTest of pendingTests) {
+          const suite = getSuite(fullFile)
+          this.processTest(suite, pendingTest, 'skipped')
+        }
       }
     }
 
@@ -94,7 +100,7 @@ export class MochawesomeJsonParser implements TestParser {
         if (innerSuite?.suites[nestedSuiteIndex]?.suites.length > 0) {
           processNestedSuites(innerSuite, 0)
         } else {
-          processAllTests(innerSuite?.suites[nestedSuiteIndex].tests, innerSuite?.suites[nestedSuiteIndex].fullFile)
+          processAllTests(innerSuite?.suites[nestedSuiteIndex]?.tests, innerSuite?.suites[nestedSuiteIndex]?.fullFile)
           nestedSuiteIndex++
 
           // TODO - Figure out how to get 1.1.1.1.2

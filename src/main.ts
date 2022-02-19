@@ -25,7 +25,7 @@ async function main(): Promise<void> {
   try {
     const testReporter = new TestReporter()
     await testReporter.run()
-  } catch (error) {
+  } catch (error: any) {
     core.setFailed(error.message)
   }
 }

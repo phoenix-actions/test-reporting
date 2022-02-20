@@ -34,17 +34,14 @@ export class MochawesomeJsonParser implements TestParser {
   private getTestRunResult(resultsPath: string, mochawesome: MochawesomeJson): TestRunResult {
     const suitesMap: {[path: string]: TestSuiteResult} = {}
 
-    const results = mochawesome.results[0]
-    const suites = results?.suites
-    const filePath = results?.fullFile
-    const suitelessTests = results?.tests
+    const results = mochawesome.results
 
-    const getSuite = (fullFile?: string): TestSuiteResult => {
-      const path = this.getRelativePath(fullFile ?? filePath)
+    const getSuite = (fullFile: string): TestSuiteResult => {
+      const path = this.getRelativePath(fullFile)
       return suitesMap[path] ?? (suitesMap[path] = new TestSuiteResult(path, []))
     }
 
-    const processPassingTests = (tests: MochawesomeJsonTest[], fullFile?: string): void => {
+    const processPassingTests = (tests: MochawesomeJsonTest[], fullFile: string): void => {
       const passingTests = tests?.filter(test => test.pass)
 
       if (passingTests) {
@@ -55,7 +52,7 @@ export class MochawesomeJsonParser implements TestParser {
       }
     }
 
-    const processFailingTests = (tests: MochawesomeJsonTest[], fullFile?: string): void => {
+    const processFailingTests = (tests: MochawesomeJsonTest[], fullFile: string): void => {
       const failingTests = tests?.filter(test => test.fail)
 
       if (failingTests) {
@@ -66,7 +63,7 @@ export class MochawesomeJsonParser implements TestParser {
       }
     }
 
-    const processPendingTests = (tests: MochawesomeJsonTest[], fullFile?: string): void => {
+    const processPendingTests = (tests: MochawesomeJsonTest[], fullFile: string): void => {
       const pendingTests = tests?.filter(test => test.pending)
 
       if (pendingTests) {
@@ -77,41 +74,47 @@ export class MochawesomeJsonParser implements TestParser {
       }
     }
 
-    const processAllTests = (tests: MochawesomeJsonTest[], fullFile?: string): void => {
+    const processAllTests = (tests: MochawesomeJsonTest[], fullFile: string): void => {
       processPassingTests(tests, fullFile)
       processFailingTests(tests, fullFile)
       processPendingTests(tests, fullFile)
     }
 
-    // Process tests that aren't in a suite
-    if (suitelessTests?.length > 0) {
-      processAllTests(suitelessTests)
-    }
+    for (const result of results) {
+      const suites = result?.suites
+      const filePath = result?.fullFile
+      const suitelessTests = result?.tests
 
-    // Handle nested suites
-    const processNestedSuites = (suite: MochawesomeJsonSuite, nestedSuiteIndex: number): void => {
-      // Process suite tests
-      processAllTests(suite.tests, suite.fullFile)
+      // Process tests that aren't in a suite
+      if (suitelessTests?.length > 0) {
+        processAllTests(suitelessTests, filePath)
+      }
 
-      for (const innerSuite of suite.suites) {
-        // Process inner suite tests
-        processAllTests(innerSuite.tests, innerSuite.fullFile)
+      // Handle nested suites
+      const processNestedSuites = (suite: MochawesomeJsonSuite, nestedSuiteIndex: number): void => {
+        // Process suite tests
+        processAllTests(suite.tests, suite.fullFile)
 
-        if (innerSuite?.suites[nestedSuiteIndex]?.suites.length > 0) {
-          processNestedSuites(innerSuite, 0)
-        } else {
-          processAllTests(innerSuite?.suites[nestedSuiteIndex]?.tests, innerSuite?.suites[nestedSuiteIndex]?.fullFile)
-          nestedSuiteIndex++
+        for (const innerSuite of suite.suites) {
+          // Process inner suite tests
+          processAllTests(innerSuite.tests, innerSuite.fullFile)
 
-          // TODO - Figure out how to get 1.1.1.1.2
+          if (innerSuite?.suites[nestedSuiteIndex]?.suites.length > 0) {
+            processNestedSuites(innerSuite, 0)
+          } else {
+            processAllTests(innerSuite?.suites[nestedSuiteIndex]?.tests, innerSuite?.suites[nestedSuiteIndex]?.fullFile)
+            nestedSuiteIndex++
+
+            // TODO - Figure out how to get 1.1.1.1.2
+          }
         }
       }
-    }
 
-    // Process tests that are in a suite
-    if (suites?.length > 0) {
-      for (const suite of suites) {
-        processNestedSuites(suite, 0)
+      // Process tests that are in a suite
+      if (suites?.length > 0) {
+        for (const suite of suites) {
+          processNestedSuites(suite, 0)
+        }
       }
     }
 

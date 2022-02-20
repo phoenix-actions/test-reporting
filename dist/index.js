@@ -312,7 +312,7 @@ class TestReporter {
         core.setOutput('skipped', skipped);
         core.setOutput('time', time);
         if (this.failOnError && isFailed) {
-            core.setFailed(`Failed test were found and 'fail-on-error' option is set to ${this.failOnError}`);
+            core.setFailed(`Failed tests were found and 'fail-on-error' option is set to ${this.failOnError}`);
             return;
         }
         if (results.length === 0) {
@@ -1266,13 +1266,10 @@ class MochawesomeJsonParser {
     }
     getTestRunResult(resultsPath, mochawesome) {
         const suitesMap = {};
-        const results = mochawesome.results[0];
-        const suites = results === null || results === void 0 ? void 0 : results.suites;
-        const filePath = results === null || results === void 0 ? void 0 : results.fullFile;
-        const suitelessTests = results === null || results === void 0 ? void 0 : results.tests;
+        const results = mochawesome.results;
         const getSuite = (fullFile) => {
             var _a;
-            const path = this.getRelativePath(fullFile !== null && fullFile !== void 0 ? fullFile : filePath);
+            const path = this.getRelativePath(fullFile);
             return (_a = suitesMap[path]) !== null && _a !== void 0 ? _a : (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
         };
         const processPassingTests = (tests, fullFile) => {
@@ -1307,32 +1304,37 @@ class MochawesomeJsonParser {
             processFailingTests(tests, fullFile);
             processPendingTests(tests, fullFile);
         };
-        // Process tests that aren't in a suite
-        if ((suitelessTests === null || suitelessTests === void 0 ? void 0 : suitelessTests.length) > 0) {
-            processAllTests(suitelessTests);
-        }
-        // Handle nested suites
-        const processNestedSuites = (suite, nestedSuiteIndex) => {
-            var _a, _b, _c;
-            // Process suite tests
-            processAllTests(suite.tests, suite.fullFile);
-            for (const innerSuite of suite.suites) {
-                // Process inner suite tests
-                processAllTests(innerSuite.tests, innerSuite.fullFile);
-                if (((_a = innerSuite === null || innerSuite === void 0 ? void 0 : innerSuite.suites[nestedSuiteIndex]) === null || _a === void 0 ? void 0 : _a.suites.length) > 0) {
-                    processNestedSuites(innerSuite, 0);
-                }
-                else {
-                    processAllTests((_b = innerSuite === null || innerSuite === void 0 ? void 0 : innerSuite.suites[nestedSuiteIndex]) === null || _b === void 0 ? void 0 : _b.tests, (_c = innerSuite === null || innerSuite === void 0 ? void 0 : innerSuite.suites[nestedSuiteIndex]) === null || _c === void 0 ? void 0 : _c.fullFile);
-                    nestedSuiteIndex++;
-                    // TODO - Figure out how to get 1.1.1.1.2
-                }
+        for (const result of results) {
+            const suites = result === null || result === void 0 ? void 0 : result.suites;
+            const filePath = result === null || result === void 0 ? void 0 : result.fullFile;
+            const suitelessTests = result === null || result === void 0 ? void 0 : result.tests;
+            // Process tests that aren't in a suite
+            if ((suitelessTests === null || suitelessTests === void 0 ? void 0 : suitelessTests.length) > 0) {
+                processAllTests(suitelessTests, filePath);
             }
-        };
-        // Process tests that are in a suite
-        if ((suites === null || suites === void 0 ? void 0 : suites.length) > 0) {
-            for (const suite of suites) {
-                processNestedSuites(suite, 0);
+            // Handle nested suites
+            const processNestedSuites = (suite, nestedSuiteIndex) => {
+                var _a, _b, _c;
+                // Process suite tests
+                processAllTests(suite.tests, suite.fullFile);
+                for (const innerSuite of suite.suites) {
+                    // Process inner suite tests
+                    processAllTests(innerSuite.tests, innerSuite.fullFile);
+                    if (((_a = innerSuite === null || innerSuite === void 0 ? void 0 : innerSuite.suites[nestedSuiteIndex]) === null || _a === void 0 ? void 0 : _a.suites.length) > 0) {
+                        processNestedSuites(innerSuite, 0);
+                    }
+                    else {
+                        processAllTests((_b = innerSuite === null || innerSuite === void 0 ? void 0 : innerSuite.suites[nestedSuiteIndex]) === null || _b === void 0 ? void 0 : _b.tests, (_c = innerSuite === null || innerSuite === void 0 ? void 0 : innerSuite.suites[nestedSuiteIndex]) === null || _c === void 0 ? void 0 : _c.fullFile);
+                        nestedSuiteIndex++;
+                        // TODO - Figure out how to get 1.1.1.1.2
+                    }
+                }
+            };
+            // Process tests that are in a suite
+            if ((suites === null || suites === void 0 ? void 0 : suites.length) > 0) {
+                for (const suite of suites) {
+                    processNestedSuites(suite, 0);
+                }
             }
         }
         const mappedSuites = Object.values(suitesMap);

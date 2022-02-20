@@ -1291,7 +1291,7 @@ class MochawesomeJsonParser {
             }
         };
         const processPendingTests = (tests, fullFile) => {
-            const pendingTests = tests === null || tests === void 0 ? void 0 : tests.filter(test => test.pending);
+            const pendingTests = tests === null || tests === void 0 ? void 0 : tests.filter(test => test.skipped);
             if (pendingTests) {
                 for (const pendingTest of pendingTests) {
                     const suite = getSuite(fullFile);

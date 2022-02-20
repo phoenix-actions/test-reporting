@@ -10,12 +10,6 @@ TestRunResult {
           "name": null,
           "tests": Array [
             TestCaseResult {
-              "error": undefined,
-              "name": "Skipped test",
-              "result": "skipped",
-              "time": 0,
-            },
-            TestCaseResult {
               "error": Object {
                 "details": "Error: Timeout of 1ms exceeded. For async tests and hooks, ensure \\"done()\\" is called; if returning a Promise, ensure it resolves. (/Users/work/Source/Repos/thirdparty/phoenix-test-reporter/reports/mochawesome/test/second.test.js)
     at listOnTimeout (node:internal/timers:557:17)

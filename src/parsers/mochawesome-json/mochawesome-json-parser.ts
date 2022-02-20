@@ -64,7 +64,7 @@ export class MochawesomeJsonParser implements TestParser {
     }
 
     const processPendingTests = (tests: MochawesomeJsonTest[], fullFile: string): void => {
-      const pendingTests = tests?.filter(test => test.pending)
+      const pendingTests = tests?.filter(test => test.skipped)
 
       if (pendingTests) {
         for (const pendingTest of pendingTests) {

@@ -26,7 +26,7 @@ export interface MochawesomeJsonTest {
   duration: number
   pass: boolean
   fail: boolean
-  pending: boolean
+  skipped: boolean
   err: MochawesomeJsonTestError
 }
 

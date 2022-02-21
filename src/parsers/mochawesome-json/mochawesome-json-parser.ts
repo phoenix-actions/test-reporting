@@ -83,7 +83,7 @@ export class MochawesomeJsonParser implements TestParser {
     // Handle nested suites
     const processNestedSuites = (suite: MochawesomeJsonSuite, nestedSuiteIndex: number, fullFile: string): void => {
       // Process suite tests
-      processAllTests(suite.tests, suite.fullFile)
+      processAllTests(suite.tests, fullFile)
 
       for (const innerSuite of suite.suites) {
         // Process inner suite tests

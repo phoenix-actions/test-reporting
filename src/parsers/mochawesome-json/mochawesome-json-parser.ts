@@ -87,12 +87,12 @@ export class MochawesomeJsonParser implements TestParser {
 
       for (const innerSuite of suite.suites) {
         // Process inner suite tests
-        processAllTests(innerSuite.tests, innerSuite.fullFile)
+        processAllTests(innerSuite.tests, fullFile)
 
         if (innerSuite?.suites[nestedSuiteIndex]?.suites.length > 0) {
           processNestedSuites(innerSuite, 0, fullFile)
         } else {
-          processAllTests(innerSuite?.suites[nestedSuiteIndex]?.tests, innerSuite?.suites[nestedSuiteIndex]?.fullFile)
+          processAllTests(innerSuite?.suites[nestedSuiteIndex]?.tests, fullFile)
           nestedSuiteIndex++
 
           // TODO - Figure out how to get 1.1.1.1.2

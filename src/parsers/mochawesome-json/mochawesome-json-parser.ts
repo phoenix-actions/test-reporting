@@ -80,6 +80,26 @@ export class MochawesomeJsonParser implements TestParser {
       processPendingTests(tests, fullFile)
     }
 
+    // Handle nested suites
+    const processNestedSuites = (suite: MochawesomeJsonSuite, nestedSuiteIndex: number): void => {
+      // Process suite tests
+      processAllTests(suite.tests, suite.fullFile)
+
+      for (const innerSuite of suite.suites) {
+        // Process inner suite tests
+        processAllTests(innerSuite.tests, innerSuite.fullFile)
+
+        if (innerSuite?.suites[nestedSuiteIndex]?.suites.length > 0) {
+          processNestedSuites(innerSuite, 0)
+        } else {
+          processAllTests(innerSuite?.suites[nestedSuiteIndex]?.tests, innerSuite?.suites[nestedSuiteIndex]?.fullFile)
+          nestedSuiteIndex++
+
+          // TODO - Figure out how to get 1.1.1.1.2
+        }
+      }
+    }
+
     for (const result of results) {
       const suites = result?.suites
       const filePath = result?.fullFile
@@ -88,26 +108,6 @@ export class MochawesomeJsonParser implements TestParser {
       // Process tests that aren't in a suite
       if (suitelessTests?.length > 0) {
         processAllTests(suitelessTests, filePath)
-      }
-
-      // Handle nested suites
-      const processNestedSuites = (suite: MochawesomeJsonSuite, nestedSuiteIndex: number): void => {
-        // Process suite tests
-        processAllTests(suite.tests, suite.fullFile)
-
-        for (const innerSuite of suite.suites) {
-          // Process inner suite tests
-          processAllTests(innerSuite.tests, innerSuite.fullFile)
-
-          if (innerSuite?.suites[nestedSuiteIndex]?.suites.length > 0) {
-            processNestedSuites(innerSuite, 0)
-          } else {
-            processAllTests(innerSuite?.suites[nestedSuiteIndex]?.tests, innerSuite?.suites[nestedSuiteIndex]?.fullFile)
-            nestedSuiteIndex++
-
-            // TODO - Figure out how to get 1.1.1.1.2
-          }
-        }
       }
 
       // Process tests that are in a suite

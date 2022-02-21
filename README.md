@@ -1,4 +1,4 @@
-# Test Reporter
+# Test Reporting
 
 This [Github Action](https://github.com/features/actions) displays test results from popular testing frameworks directly in GitHub.
 

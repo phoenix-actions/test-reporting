@@ -8,12 +8,16 @@ export interface MochawesomeJsonStat {
 }
 
 export interface MochawesomeJsonResult {
+  tests: MochawesomeJsonTest[]
   suites: MochawesomeJsonSuite[]
   fullFile: string
+  title: string
 }
 
 export interface MochawesomeJsonSuite {
   tests: MochawesomeJsonTest[]
+  suites: MochawesomeJsonSuite[]
+  fullFile: string
 }
 
 export interface MochawesomeJsonTest {
@@ -22,7 +26,7 @@ export interface MochawesomeJsonTest {
   duration: number
   pass: boolean
   fail: boolean
-  pending: boolean
+  skipped: boolean
   err: MochawesomeJsonTestError
 }
 

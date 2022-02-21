@@ -312,7 +312,7 @@ class TestReporter {
         core.setOutput('skipped', skipped);
         core.setOutput('time', time);
         if (this.failOnError && isFailed) {
-            core.setFailed(`Failed test were found and 'fail-on-error' option is set to ${this.failOnError}`);
+            core.setFailed(`Failed tests were found and 'fail-on-error' option is set to ${this.failOnError}`);
             return;
         }
         if (results.length === 0) {
@@ -1266,31 +1266,79 @@ class MochawesomeJsonParser {
     }
     getTestRunResult(resultsPath, mochawesome) {
         const suitesMap = {};
-        if (mochawesome.results.length > 0 &&
-            mochawesome.results[0].suites.length > 0 &&
-            mochawesome.results[0].suites[0].tests.length > 0) {
-            const filePath = mochawesome.results[0].fullFile;
-            const tests = mochawesome.results[0].suites[0].tests;
-            const getSuite = () => {
-                var _a;
-                const path = this.getRelativePath(filePath);
-                return (_a = suitesMap[path]) !== null && _a !== void 0 ? _a : (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
+        const results = mochawesome.results;
+        const getSuite = (fullFile) => {
+            var _a;
+            const path = this.getRelativePath(fullFile);
+            return (_a = suitesMap[path]) !== null && _a !== void 0 ? _a : (suitesMap[path] = new test_results_1.TestSuiteResult(path, []));
+        };
+        const processPassingTests = (tests, fullFile) => {
+            const passingTests = tests === null || tests === void 0 ? void 0 : tests.filter(test => test.pass);
+            if (passingTests) {
+                for (const passingTest of passingTests) {
+                    const suite = getSuite(fullFile);
+                    this.processTest(suite, passingTest, 'success');
+                }
+            }
+        };
+        const processFailingTests = (tests, fullFile) => {
+            const failingTests = tests === null || tests === void 0 ? void 0 : tests.filter(test => test.fail);
+            if (failingTests) {
+                for (const failingTest of failingTests) {
+                    const suite = getSuite(fullFile);
+                    this.processTest(suite, failingTest, 'failed');
+                }
+            }
+        };
+        const processPendingTests = (tests, fullFile) => {
+            const pendingTests = tests === null || tests === void 0 ? void 0 : tests.filter(test => test.skipped);
+            if (pendingTests) {
+                for (const pendingTest of pendingTests) {
+                    const suite = getSuite(fullFile);
+                    this.processTest(suite, pendingTest, 'skipped');
+                }
+            }
+        };
+        const processAllTests = (tests, fullFile) => {
+            processPassingTests(tests, fullFile);
+            processFailingTests(tests, fullFile);
+            processPendingTests(tests, fullFile);
+        };
+        for (const result of results) {
+            const suites = result === null || result === void 0 ? void 0 : result.suites;
+            const filePath = result === null || result === void 0 ? void 0 : result.fullFile;
+            const suitelessTests = result === null || result === void 0 ? void 0 : result.tests;
+            // Process tests that aren't in a suite
+            if ((suitelessTests === null || suitelessTests === void 0 ? void 0 : suitelessTests.length) > 0) {
+                processAllTests(suitelessTests, filePath);
+            }
+            // Handle nested suites
+            const processNestedSuites = (suite, nestedSuiteIndex) => {
+                var _a, _b, _c;
+                // Process suite tests
+                processAllTests(suite.tests, suite.fullFile);
+                for (const innerSuite of suite.suites) {
+                    // Process inner suite tests
+                    processAllTests(innerSuite.tests, innerSuite.fullFile);
+                    if (((_a = innerSuite === null || innerSuite === void 0 ? void 0 : innerSuite.suites[nestedSuiteIndex]) === null || _a === void 0 ? void 0 : _a.suites.length) > 0) {
+                        processNestedSuites(innerSuite, 0);
+                    }
+                    else {
+                        processAllTests((_b = innerSuite === null || innerSuite === void 0 ? void 0 : innerSuite.suites[nestedSuiteIndex]) === null || _b === void 0 ? void 0 : _b.tests, (_c = innerSuite === null || innerSuite === void 0 ? void 0 : innerSuite.suites[nestedSuiteIndex]) === null || _c === void 0 ? void 0 : _c.fullFile);
+                        nestedSuiteIndex++;
+                        // TODO - Figure out how to get 1.1.1.1.2
+                    }
+                }
             };
-            for (const currentTest of tests.filter(test => test.pass)) {
-                const suite = getSuite();
-                this.processTest(suite, currentTest, 'success');
-            }
-            for (const currentTest of tests.filter(test => test.fail)) {
-                const suite = getSuite();
-                this.processTest(suite, currentTest, 'failed');
-            }
-            for (const currentTest of tests.filter(test => test.pending)) {
-                const suite = getSuite();
-                this.processTest(suite, currentTest, 'skipped');
+            // Process tests that are in a suite
+            if ((suites === null || suites === void 0 ? void 0 : suites.length) > 0) {
+                for (const suite of suites) {
+                    processNestedSuites(suite, 0);
+                }
             }
         }
-        const suites = Object.values(suitesMap);
-        return new test_results_1.TestRunResult(resultsPath, suites, mochawesome.stats.duration);
+        const mappedSuites = Object.values(suitesMap);
+        return new test_results_1.TestRunResult(resultsPath, mappedSuites, mochawesome.stats.duration);
     }
     processTest(suite, test, result) {
         var _a;
@@ -15650,7 +15698,7 @@ var isWin32 = __nccwpck_require__(2087).platform() === 'win32';
 
 var slash = '/';
 var backslash = /\\/g;
-var enclosure = /[\{\[].*[\/]*.*[\}\]]$/;
+var enclosure = /[\{\[].*[\}\]]$/;
 var globby = /(^|[^\\])([\{\[]|\([^\)]+$)/;
 var escaped = /\\([\!\*\?\|\[\]\(\)\{\}])/g;
 
@@ -15658,6 +15706,7 @@ var escaped = /\\([\!\*\?\|\[\]\(\)\{\}])/g;
  * @param {string} str
  * @param {Object} opts
  * @param {boolean} [opts.flipBackslashes=true]
+ * @returns {string}
  */
 module.exports = function globParent(str, opts) {
   var options = Object.assign({ flipBackslashes: true }, opts);

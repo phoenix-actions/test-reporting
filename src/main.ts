@@ -25,7 +25,7 @@ async function main(): Promise<void> {
   try {
     const testReporter = new TestReporter()
     await testReporter.run()
-  } catch (error) {
+  } catch (error: any) {
     core.setFailed(error.message)
   }
 }
@@ -131,7 +131,7 @@ class TestReporter {
     core.setOutput('time', time)
 
     if (this.failOnError && isFailed) {
-      core.setFailed(`Failed test were found and 'fail-on-error' option is set to ${this.failOnError}`)
+      core.setFailed(`Failed tests were found and 'fail-on-error' option is set to ${this.failOnError}`)
       return
     }
 

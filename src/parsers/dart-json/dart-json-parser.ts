@@ -91,7 +91,7 @@ export class DartJsonParser implements TestParser {
         }
         try {
           return JSON.parse(str)
-        } catch (e) {
+        } catch (e: any) {
           const col = e.columnNumber !== undefined ? `:${e.columnNumber}` : ''
           throw new Error(`Invalid JSON at ${path}:${i + 1}${col}\n\n${e}`)
         }

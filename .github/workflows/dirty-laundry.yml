@@ -1,11 +1,9 @@
-name: 'CI'
+name: 'Dirty Laundry Test'
 on:
   pull_request:
     paths-ignore: [ '**.md' ]
   push:
     paths-ignore: [ '**.md' ]
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
@@ -18,28 +16,12 @@ jobs:
       - run: npm run build
       - run: npm run format-check
       - run: npm run lint
-      - run: npm test
-
-      - name: Upload test results
-        if: success() || failure()
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-results
-          path: __tests__/__results__/*.xml
-
-      - name: Create test report
-        uses: ./
-        if: success() || failure()
-        with:
-          name: JEST Tests
-          path: __tests__/__results__/*.xml
-          reporter: jest-junit
 
       - name: Create mochawesome report
         uses: ./
         if: success() || failure()
         with:
           name: Mochawesome Tests
-          path: __tests__/fixtures/mochawesome-json.json
+          path: __tests__/fixtures/mochawesome1-json.json
           reporter: mochawesome-json
           fail-on-error: false

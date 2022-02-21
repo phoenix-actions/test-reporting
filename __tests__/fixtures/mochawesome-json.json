@@ -19,9 +19,9 @@
   "results": [
     {
       "uuid": "e74145e8-4f10-432c-8fe1-79fab8a0fe12",
-      "title": "",
-      "fullFile": "",
-      "file": "",
+      "title": "In-line test with no file",
+      "fullFile": "nofile",
+      "file": "nofile",
       "beforeHooks": [],
       "afterHooks": [],
       "tests": [
@@ -150,10 +150,7 @@
               ],
               "suites": [],
               "passes": [],
-              "failures": [
-                "e154e320-a501-49bd-b0dc-fcdf8fb6460a",
-                "bee0d977-da09-43a9-9683-6e2676952f60"
-              ],
+              "failures": ["e154e320-a501-49bd-b0dc-fcdf8fb6460a", "bee0d977-da09-43a9-9683-6e2676952f60"],
               "pending": [],
               "skipped": [],
               "duration": 2,
@@ -162,9 +159,7 @@
               "_timeout": 2000
             }
           ],
-          "passes": [
-            "3ebb7382-adde-438c-9d31-694714656ac3"
-          ],
+          "passes": ["3ebb7382-adde-438c-9d31-694714656ac3"],
           "failures": [],
           "pending": [],
           "skipped": [],
@@ -206,9 +201,7 @@
           ],
           "suites": [],
           "passes": [],
-          "failures": [
-            "add99db1-a040-4ab8-86cf-91051665fb47"
-          ],
+          "failures": ["add99db1-a040-4ab8-86cf-91051665fb47"],
           "pending": [],
           "skipped": [],
           "duration": 0,
@@ -218,12 +211,8 @@
         }
       ],
       "passes": [],
-      "failures": [
-        "3ad24933-108e-426f-9cc3-0d71ab9f35c2"
-      ],
-      "pending": [
-        "f1b2a440-4080-44da-9346-bb5df85581e0"
-      ],
+      "failures": ["3ad24933-108e-426f-9cc3-0d71ab9f35c2"],
+      "pending": ["f1b2a440-4080-44da-9346-bb5df85581e0"],
       "skipped": [],
       "duration": 3,
       "root": true,

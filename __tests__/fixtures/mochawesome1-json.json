@@ -29,8 +29,8 @@
         {
           "uuid": "e26be661-64d6-4e73-b867-ad2d744cfc31",
           "title": "Request all page types of example.com",
-          "fullFile": "cypress/integration/features/meganav.feature",
-          "file": "cypress/integration/features/meganav.feature",
+          "fullFile": "",
+          "file": "",
           "beforeHooks": [],
           "afterHooks": [],
           "tests": [
@@ -131,8 +131,8 @@
         {
           "uuid": "f2ef821c-f228-418e-8104-92457b993108",
           "title": "Use of PDP to show information on products",
-          "fullFile": "cypress/integration/features/pdp.feature",
-          "file": "cypress/integration/features/pdp.feature",
+          "fullFile": "",
+          "file": "",
           "beforeHooks": [],
           "afterHooks": [],
           "tests": [
@@ -662,8 +662,8 @@
         {
           "uuid": "4048e94b-d09a-47b7-8ffd-42016de8c827",
           "title": "Use of PLP to show lists of products",
-          "fullFile": "cypress/integration/features/plp.feature",
-          "file": "cypress/integration/features/plp.feature",
+          "fullFile": "",
+          "file": "",
           "beforeHooks": [],
           "afterHooks": [],
           "tests": [

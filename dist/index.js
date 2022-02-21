@@ -1304,6 +1304,24 @@ class MochawesomeJsonParser {
             processFailingTests(tests, fullFile);
             processPendingTests(tests, fullFile);
         };
+        // Handle nested suites
+        const processNestedSuites = (suite, nestedSuiteIndex, fullFile) => {
+            var _a, _b;
+            // Process suite tests
+            processAllTests(suite.tests, fullFile);
+            for (const innerSuite of suite.suites) {
+                // Process inner suite tests
+                processAllTests(innerSuite.tests, fullFile);
+                if (((_a = innerSuite === null || innerSuite === void 0 ? void 0 : innerSuite.suites[nestedSuiteIndex]) === null || _a === void 0 ? void 0 : _a.suites.length) > 0) {
+                    processNestedSuites(innerSuite, 0, fullFile);
+                }
+                else {
+                    processAllTests((_b = innerSuite === null || innerSuite === void 0 ? void 0 : innerSuite.suites[nestedSuiteIndex]) === null || _b === void 0 ? void 0 : _b.tests, fullFile);
+                    nestedSuiteIndex++;
+                    // TODO - Figure out how to get 1.1.1.1.2
+                }
+            }
+        };
         for (const result of results) {
             const suites = result === null || result === void 0 ? void 0 : result.suites;
             const filePath = result === null || result === void 0 ? void 0 : result.fullFile;
@@ -1312,28 +1330,10 @@ class MochawesomeJsonParser {
             if ((suitelessTests === null || suitelessTests === void 0 ? void 0 : suitelessTests.length) > 0) {
                 processAllTests(suitelessTests, filePath);
             }
-            // Handle nested suites
-            const processNestedSuites = (suite, nestedSuiteIndex) => {
-                var _a, _b, _c;
-                // Process suite tests
-                processAllTests(suite.tests, suite.fullFile);
-                for (const innerSuite of suite.suites) {
-                    // Process inner suite tests
-                    processAllTests(innerSuite.tests, innerSuite.fullFile);
-                    if (((_a = innerSuite === null || innerSuite === void 0 ? void 0 : innerSuite.suites[nestedSuiteIndex]) === null || _a === void 0 ? void 0 : _a.suites.length) > 0) {
-                        processNestedSuites(innerSuite, 0);
-                    }
-                    else {
-                        processAllTests((_b = innerSuite === null || innerSuite === void 0 ? void 0 : innerSuite.suites[nestedSuiteIndex]) === null || _b === void 0 ? void 0 : _b.tests, (_c = innerSuite === null || innerSuite === void 0 ? void 0 : innerSuite.suites[nestedSuiteIndex]) === null || _c === void 0 ? void 0 : _c.fullFile);
-                        nestedSuiteIndex++;
-                        // TODO - Figure out how to get 1.1.1.1.2
-                    }
-                }
-            };
             // Process tests that are in a suite
             if ((suites === null || suites === void 0 ? void 0 : suites.length) > 0) {
                 for (const suite of suites) {
-                    processNestedSuites(suite, 0);
+                    processNestedSuites(suite, 0, filePath);
                 }
             }
         }

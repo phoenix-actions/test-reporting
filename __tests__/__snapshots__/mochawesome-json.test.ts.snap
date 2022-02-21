@@ -24,12 +24,6 @@ TestRunResult {
             },
           ],
         },
-      ],
-      "name": "nofile",
-      "totalTime": undefined,
-    },
-    TestSuiteResult {
-      "groups": Array [
         TestGroupResult {
           "name": "Test 1",
           "tests": Array [
@@ -98,7 +92,7 @@ false !== true
           ],
         },
       ],
-      "name": "test/main.test.js",
+      "name": "nofile",
       "totalTime": undefined,
     },
   ],

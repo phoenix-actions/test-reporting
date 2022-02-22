@@ -43,7 +43,7 @@ jobs:
       - run: npm test                 # run tests (configured to use jest-junit reporter)
 
       - name: Test Report
-        uses: phoenix-actions/test-reporting@v1.1
+        uses: phoenix-actions/test-reporting@v3
         if: success() || failure()    # run this step even if previous step failed
         with:
           name: JEST Tests            # Name of the check run which will be created
@@ -88,7 +88,7 @@ jobs:
   report:
     runs-on: ubuntu-latest
     steps:
-    - uses: phoenix-actions/test-reporting@v1.1
+    - uses: phoenix-actions/test-reporting@v3
       with:
         artifact: test-results            # artifact name
         name: JEST Tests                  # Name of the check run which will be created
@@ -99,7 +99,7 @@ jobs:
 ## Usage
 
 ```yaml
-- uses: phoenix-actions/test-reporting@v1.1
+- uses: phoenix-actions/test-reporting@v3
   with:
 
     # Name or regex of artifact containing test results

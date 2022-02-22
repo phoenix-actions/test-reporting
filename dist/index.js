@@ -225,6 +225,7 @@ const mocha_json_parser_1 = __nccwpck_require__(6043);
 const mochawesome_json_parser_1 = __nccwpck_require__(4024);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
+const constants_1 = __nccwpck_require__(2842);
 async function main() {
     try {
         const testReporter = new TestReporter();
@@ -368,6 +369,7 @@ class TestReporter {
         core.info(`Check run create response: ${resp.status}`);
         core.info(`Check run URL: ${resp.data.url}`);
         core.info(`Check run HTML: ${resp.data.html_url}`);
+        core.setOutput(constants_1.Outputs.runHtmlUrl, `${resp.data.html_url}`);
         return results;
     }
     getParser(reporter, options) {
@@ -1849,6 +1851,21 @@ class TestCaseResult {
     }
 }
 exports.TestCaseResult = TestCaseResult;
+
+
+/***/ }),
+
+/***/ 2842:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Outputs = void 0;
+var Outputs;
+(function (Outputs) {
+    Outputs["runHtmlUrl"] = "runHtmlUrl";
+})(Outputs = exports.Outputs || (exports.Outputs = {}));
 
 
 /***/ }),

@@ -19,6 +19,7 @@ import {MochawesomeJsonParser} from './parsers/mochawesome-json/mochawesome-json
 
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
 import {getCheckRunContext} from './utils/github-utils'
+import {Outputs} from './utils/constants'
 
 async function main(): Promise<void> {
   try {
@@ -196,7 +197,8 @@ class TestReporter {
     core.info(`Check run create response: ${resp.status}`)
     core.info(`Check run URL: ${resp.data.url}`)
     core.info(`Check run HTML: ${resp.data.html_url}`)
-    core.setOutput('runHtmlUrl', `${resp.data.html_url}`)
+
+    core.setOutput(Outputs.runHtmlUrl, `${resp.data.html_url}`)
 
     return results
   }

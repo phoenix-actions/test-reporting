@@ -63,6 +63,32 @@ TestRunResult {
 }
 `;
 
+exports[`jest-junit tests parsing ESLint report without timing information works 1`] = `
+TestRunResult {
+  "path": "fixtures/jest-junit-eslint.xml",
+  "suites": Array [
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "test",
+          "tests": Array [
+            TestCaseResult {
+              "error": undefined,
+              "name": "test.jsx",
+              "result": "success",
+              "time": 0,
+            },
+          ],
+        },
+      ],
+      "name": "test.jsx",
+      "totalTime": 0,
+    },
+  ],
+  "totalTime": undefined,
+}
+`;
+
 exports[`jest-junit tests report from ./reports/jest test results matches snapshot 1`] = `
 TestRunResult {
   "path": "fixtures/jest-junit.xml",

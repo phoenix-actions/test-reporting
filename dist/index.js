@@ -225,7 +225,6 @@ const mocha_json_parser_1 = __nccwpck_require__(6043);
 const mochawesome_json_parser_1 = __nccwpck_require__(4024);
 const path_utils_1 = __nccwpck_require__(4070);
 const github_utils_1 = __nccwpck_require__(3522);
-const markdown_utils_1 = __nccwpck_require__(6482);
 async function main() {
     try {
         const testReporter = new TestReporter();
@@ -350,14 +349,17 @@ class TestReporter {
         const annotations = get_annotations_1.getAnnotations(results, this.maxAnnotations);
         const isFailed = results.some(tr => tr.result === 'failed');
         const conclusion = isFailed ? 'failure' : 'success';
-        const icon = isFailed ? markdown_utils_1.Icon.fail : markdown_utils_1.Icon.success;
+        const passed = results.reduce((sum, tr) => sum + tr.passed, 0);
+        const failed = results.reduce((sum, tr) => sum + tr.failed, 0);
+        const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0);
+        const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `;
         core.info(`Updating check run conclusion (${conclusion}) and output`);
         const resp = await this.octokit.checks.update({
             check_run_id: createResp.data.id,
             conclusion,
             status: 'completed',
             output: {
-                title: `${name} ${icon}`,
+                title: shortSummary,
                 summary,
                 annotations
             },
@@ -1067,7 +1069,7 @@ class JestJunitParser {
                 const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
                 return sr;
             });
-        const time = parseFloat(junit.testsuites.$.time) * 1000;
+        const time = junit.testsuites.$ && parseFloat(junit.testsuites.$.time) * 1000;
         return new test_results_1.TestRunResult(path, suites, time);
     }
     getGroups(suite) {

@@ -67,6 +67,26 @@ describe('jest-junit tests', () => {
     fs.writeFileSync(outputPath, report)
   })
 
+  it('parsing ESLint report without timing information works', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'jest-junit-eslint.xml')
+    const outputPath = path.join(__dirname, '__outputs__', 'jest-junit-eslint.md')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles: ['test.js']
+    }
+
+    const parser = new JestJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    expect(result).toMatchSnapshot()
+
+    const report = getReport([result])
+    fs.mkdirSync(path.dirname(outputPath), {recursive: true})
+    fs.writeFileSync(outputPath, report)
+  })
+
   it('jest testsuite errors example test results matches snapshot', async () => {
     const fixturePath = path.join(__dirname, 'fixtures', 'test-errors', 'jest', 'jest-test-results.xml')
     const trackedFilesPath = path.join(__dirname, 'fixtures', 'test-errors', 'jest', 'files.txt')

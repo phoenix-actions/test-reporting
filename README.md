@@ -44,11 +44,46 @@ jobs:
 
       - name: Test Report
         uses: phoenix-actions/test-reporting@v3
+        id: test-report               # Set ID reference for step
         if: success() || failure()    # run this step even if previous step failed
         with:
           name: JEST Tests            # Name of the check run which will be created
           path: reports/jest-*.xml    # Path to test results
           reporter: jest-junit        # Format of test results
+```
+
+## Action Outputs
+
+A list of the possible action outputs are listed below.
+
+* runHtmlUrl
+
+In case you want to extract and read an output from the action, see the below example code:
+```yaml
+on:
+  pull_request:
+  push:
+jobs:
+  build-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2     # checkout the repo
+      - run: npm ci                   # install packages
+      - run: npm test                 # run tests (configured to use jest-junit reporter)
+
+      - name: Test Report
+        uses: phoenix-actions/test-reporting@v3
+        id: test-report               # Set ID reference for step
+        if: success() || failure()    # run this step even if previous step failed
+        with:
+          name: JEST Tests            # Name of the check run which will be created
+          path: reports/jest-*.xml    # Path to test results
+          reporter: jest-junit        # Format of test results
+
+      - name: Read output variables
+        run: |
+          echo "url is ${{ steps.test-report.outputs.runHtmlUrl }}"
 ```
 
 ## Recommended setup for public repositories
@@ -89,6 +124,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: phoenix-actions/test-reporting@v3
+      id: test-report                     # Set ID reference for step
       with:
         artifact: test-results            # artifact name
         name: JEST Tests                  # Name of the check run which will be created

@@ -323,7 +323,7 @@ Unfortunately, there are some known issues and limitations caused by GitHub API:
 - Test report can't reference any additional files (e.g. screenshots). You can use `actions/upload-artifact@v2` to upload them and inspect them manually.
 - Check Runs are created for specific commit SHA. It's not possible to specify under which workflow test report should belong if more
   workflows are running for the same SHA. Thanks to this GitHub "feature" it's possible your test report will appear in an unexpected place in GitHub UI.
-  For more information, see [#67](https://github.com/phoenix-actions/test-reporting/issues/67).
+  For more information, see [#67](https://github.com/dorny/test-reporter/issues/67).
 
 ## See also
 - [paths-filter](https://github.com/dorny/paths-filter) - Conditionally run actions based on files modified by PR, feature branch, or pushed commits

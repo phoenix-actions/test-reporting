@@ -287,7 +287,7 @@ Configuration of `uniqueOutputName`, `suiteNameTemplate`, `classNameTemplate`, `
   <summary>mocha-json</summary>
 
 [Mocha](https://mochajs.org/) testing framework support requires:
-- Mocha version [v7.2.0](https://github.com/mochajs/mocha/releases/tag/v7.2.0) or higher
+- Mocha version [v9.1.0](https://github.com/mochajs/mocha/releases/tag/v9.1.0) or higher
 - Usage of [json](https://mochajs.org/#json) reporter.
 
 You can use the following example configuration in `package.json`:
@@ -297,6 +297,15 @@ You can use the following example configuration in `package.json`:
 }
 ```
 
+For Mocha < v9.1, the command should look like this:
+```json
+"scripts": {
+  "test": "mocha --reporter json > test-results.json"
+}
+```
+Additionally, test processing might fail if any of your tests write anything on standard output.
+Before version [v9.1.0](https://github.com/mochajs/mocha/releases/tag/v9.1.0), Mocha doesn't have the option to store `json` output directly to the file, and we have to rely on redirecting its standard output ([mocha#4607](https://github.com/mochajs/mocha/pull/4607)).
+Please update Mocha to version [v9.1.0](https://github.com/mochajs/mocha/releases/tag/v9.1.0) or above if you encounter this issue.
 </details>
 
 <details>
@@ -323,7 +332,7 @@ Unfortunately, there are some known issues and limitations caused by GitHub API:
 - Test report can't reference any additional files (e.g. screenshots). You can use `actions/upload-artifact@v2` to upload them and inspect them manually.
 - Check Runs are created for specific commit SHA. It's not possible to specify under which workflow test report should belong if more
   workflows are running for the same SHA. Thanks to this GitHub "feature" it's possible your test report will appear in an unexpected place in GitHub UI.
-  For more information, see [#67](https://github.com/phoenix-actions/test-reporting/issues/67).
+  For more information, see [#67](https://github.com/dorny/test-reporter/issues/67).
 
 ## See also
 - [paths-filter](https://github.com/dorny/paths-filter) - Conditionally run actions based on files modified by PR, feature branch, or pushed commits

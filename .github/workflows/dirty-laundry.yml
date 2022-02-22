@@ -19,9 +19,15 @@ jobs:
 
       - name: Create mochawesome report
         uses: ./
+        id: test-report
         if: success() || failure()
         with:
           name: Mochawesome Tests
           path: __tests__/fixtures/mochawesome1-json.json
           reporter: mochawesome-json
           fail-on-error: false
+
+      - name: Read output variables
+        run: |
+          echo "url is ${{ steps.test-report.outputs.runHtmlUrl }}"
+          echo "sha is ${{ github.sha }}"

@@ -19,6 +19,7 @@ jobs:
 
       - name: Create mochawesome report
         uses: ./
+        id: test-report
         if: success() || failure()
         with:
           name: Mochawesome Tests

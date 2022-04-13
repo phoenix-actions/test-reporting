@@ -1,6 +1,8 @@
 # Test Reporting
 
-This [Github Action](https://github.com/features/actions) displays test results from popular testing frameworks directly in GitHub.
+A fork of [Dorny's test reporter](https://github.com/dorny/test-reporter) created primarily to add support for `mochawesome-json`. Also includes several further feature enhancements and bug fixes on the original.
+
+This [Github Action](https://github.com/marketplace/actions/test-reporting) displays test results from popular testing frameworks directly in GitHub.
 
 ✔️ Parses test results in XML or JSON format and creates nice report as Github Check Run
 

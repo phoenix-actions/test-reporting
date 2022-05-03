@@ -19,7 +19,7 @@ This [Github Action](https://github.com/marketplace/actions/test-reporting) disp
 - Dart / [test](https://pub.dev/packages/test)
 - Flutter / [test](https://pub.dev/packages/test)
 - Java / [JUnit](https://junit.org/)
-- JavaScript / [JEST](https://jestjs.io/) / [Mocha](https://mochajs.org/ / [Mochawesome](https://github.com/adamgruber/mochawesome)
+- JavaScript / [JEST](https://jestjs.io/) / [Mocha](https://mochajs.org/) / [Mochawesome](https://github.com/adamgruber/mochawesome)
 
 For more information see [Supported formats](#supported-formats) section.
 

@@ -5,7 +5,7 @@ export function getExceptionSource(
   trackedFiles: string[],
   getRelativePath: (str: string) => string
 ): {path: string; line: number} | undefined {
-  const lines = stackTrace.split(/\r?\n/)
+  const lines = stackTrace ? stackTrace.split(/\r?\n/) : []
   const re = /\((.*):(\d+):\d+\)$/
 
   for (const str of lines) {

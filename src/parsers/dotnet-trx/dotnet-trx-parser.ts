@@ -165,7 +165,7 @@ export class DotnetTrxParser implements TestParser {
   }
 
   private exceptionThrowSource(stackTrace: string): {path: string; line: number} | undefined {
-    const lines = stackTrace.split(/\r*\n/)
+    const lines = stackTrace ? stackTrace.split(/\r*\n/) : []
     const re = / in (.+):line (\d+)$/
     const {trackedFiles} = this.options
 

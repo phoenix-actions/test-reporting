@@ -142,7 +142,7 @@ export class JavaJunitParser implements TestParser {
     }
   }
 
-  private exceptionThrowSource(stackTrace: string): {filePath: string; line: number} | undefined {
+  private exceptionThrowSource(stackTrace = ''): {filePath: string; line: number} | undefined {
     const lines = stackTrace.split(/\r?\n/)
     const re = /^at (.*)\((.*):(\d+)\)$/
 

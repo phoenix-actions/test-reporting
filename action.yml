@@ -86,6 +86,8 @@ outputs:
     description: Count of skipped tests
   time:
     description: Test execution time [ms]
+  runHtmlUrl:
+    description: Exposes the URL for the HTML version of the run report
 runs:
   using: 'node16'
   main: 'dist/index.js'

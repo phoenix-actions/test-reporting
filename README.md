@@ -45,7 +45,7 @@ jobs:
       - run: npm test                 # run tests (configured to use jest-junit reporter)
 
       - name: Test Report
-        uses: phoenix-actions/test-reporting@v7
+        uses: phoenix-actions/test-reporting@v8
         id: test-report               # Set ID reference for step
         if: success() || failure()    # run this step even if previous step failed
         with:
@@ -75,7 +75,7 @@ jobs:
       - run: npm test                 # run tests (configured to use jest-junit reporter)
 
       - name: Test Report
-        uses: phoenix-actions/test-reporting@v7
+        uses: phoenix-actions/test-reporting@v8
         id: test-report               # Set ID reference for step
         if: success() || failure()    # run this step even if previous step failed
         with:
@@ -125,7 +125,7 @@ jobs:
   report:
     runs-on: ubuntu-latest
     steps:
-    - uses: phoenix-actions/test-reporting@v7
+    - uses: phoenix-actions/test-reporting@v8
       id: test-report                     # Set ID reference for step
       with:
         artifact: test-results            # artifact name
@@ -137,7 +137,7 @@ jobs:
 ## Usage
 
 ```yaml
-- uses: phoenix-actions/test-reporting@v7
+- uses: phoenix-actions/test-reporting@v8
   with:
 
     # Name or regex of artifact containing test results

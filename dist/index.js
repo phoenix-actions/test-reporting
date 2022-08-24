@@ -213,6 +213,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
+const crypto_1 = __nccwpck_require__(6417);
 const artifact_provider_1 = __nccwpck_require__(7171);
 const local_file_provider_1 = __nccwpck_require__(9399);
 const get_annotations_1 = __nccwpck_require__(5867);
@@ -234,6 +235,15 @@ async function main() {
         core.setFailed(error.message);
     }
 }
+function createSlugPrefix() {
+    const step_summary = process.env['GITHUB_STEP_SUMMARY'];
+    if (!step_summary || step_summary === '') {
+        return '';
+    }
+    const hash = crypto_1.createHash('sha1');
+    hash.update(step_summary);
+    return hash.digest('hex').substring(0, 8);
+}
 class TestReporter {
     constructor() {
         this.artifact = core.getInput('artifact', { required: false });
@@ -249,6 +259,7 @@ class TestReporter {
         this.onlySummary = core.getInput('only-summary', { required: false }) === 'true';
         this.outputTo = core.getInput('output-to', { required: false });
         this.token = core.getInput('token', { required: true });
+        this.slugPrefix = createSlugPrefix();
         this.context = github_utils_1.getCheckRunContext();
         this.octokit = github.getOctokit(this.token);
         if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
@@ -352,8 +363,8 @@ class TestReporter {
             check_run_id = createResp.data.id;
         }
         core.info('Creating report summary');
-        const { listSuites, listTests, onlySummary } = this;
-        const summary = get_report_1.getReport(results, { listSuites, listTests, baseUrl, onlySummary });
+        const { listSuites, listTests, onlySummary, slugPrefix } = this;
+        const summary = get_report_1.getReport(results, { listSuites, listTests, baseUrl, slugPrefix, onlySummary });
         core.info('Creating annotations');
         const annotations = get_annotations_1.getAnnotations(results, this.maxAnnotations);
         const isFailed = results.some(tr => tr.result === 'failed');
@@ -1561,6 +1572,7 @@ const MAX_REPORT_LENGTH = 65535;
 const defaultOptions = {
     listSuites: 'all',
     listTests: 'all',
+    slugPrefix: '',
     baseUrl: '',
     onlySummary: false
 };
@@ -1664,7 +1676,7 @@ function getTestRunsReport(testRuns, options) {
         const tableData = testRuns.map((tr, runIndex) => {
             const time = markdown_utils_1.formatTime(tr.time);
             const name = tr.path;
-            const addr = options.baseUrl + makeRunSlug(runIndex).link;
+            const addr = options.baseUrl + makeRunSlug(runIndex, options.slugPrefix).link;
             const nameLink = markdown_utils_1.link(name, addr);
             const passed = tr.passed > 0 ? `${tr.passed}${markdown_utils_1.Icon.success}` : '';
             const failed = tr.failed > 0 ? `${tr.failed}${markdown_utils_1.Icon.fail}` : '';
@@ -1682,7 +1694,7 @@ function getTestRunsReport(testRuns, options) {
 }
 function getSuitesReport(tr, runIndex, options) {
     const sections = [];
-    const trSlug = makeRunSlug(runIndex);
+    const trSlug = makeRunSlug(runIndex, options.slugPrefix);
     const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`;
     const icon = getResultIcon(tr.result);
     sections.push(`## ${icon}\xa0${nameLink}`);
@@ -1697,7 +1709,7 @@ function getSuitesReport(tr, runIndex, options) {
             const tsTime = markdown_utils_1.formatTime(s.time);
             const tsName = s.name;
             const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
-            const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link;
+            const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex, options.slugPrefix).link;
             const tsNameLink = skipLink ? tsName : markdown_utils_1.link(tsName, tsAddr);
             const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '';
             const failed = s.failed > 0 ? `${s.failed}${markdown_utils_1.Icon.fail}` : '';
@@ -1725,7 +1737,7 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
     }
     const sections = [];
     const tsName = ts.name;
-    const tsSlug = makeSuiteSlug(runIndex, suiteIndex);
+    const tsSlug = makeSuiteSlug(runIndex, suiteIndex, options.slugPrefix);
     const tsNameLink = `<a id="${tsSlug.id}" href="${options.baseUrl + tsSlug.link}">${tsName}</a>`;
     const icon = getResultIcon(ts.result);
     sections.push(`### ${icon}\xa0${tsNameLink}`);
@@ -1752,13 +1764,13 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
     sections.push('```');
     return sections;
 }
-function makeRunSlug(runIndex) {
+function makeRunSlug(runIndex, slugPrefix) {
     // use prefix to avoid slug conflicts after escaping the paths
-    return slugger_1.slug(`r${runIndex}`);
+    return slugger_1.slug(`r${slugPrefix}${runIndex}`);
 }
-function makeSuiteSlug(runIndex, suiteIndex) {
+function makeSuiteSlug(runIndex, suiteIndex, slugPrefix) {
     // use prefix to avoid slug conflicts after escaping the paths
-    return slugger_1.slug(`r${runIndex}s${suiteIndex}`);
+    return slugger_1.slug(`r${slugPrefix}${runIndex}s${suiteIndex}`);
 }
 function getResultIcon(result) {
     switch (result) {
@@ -2462,7 +2474,7 @@ const file_command_1 = __nccwpck_require__(717);
 const utils_1 = __nccwpck_require__(5278);
 const os = __importStar(__nccwpck_require__(2087));
 const path = __importStar(__nccwpck_require__(5622));
-const uuid_1 = __nccwpck_require__(1270);
+const uuid_1 = __nccwpck_require__(9826);
 const oidc_utils_1 = __nccwpck_require__(8041);
 /**
  * The code to exit an action
@@ -4069,7 +4081,7 @@ exports.checkBypass = checkBypass;
 
 /***/ }),
 
-/***/ 1270:
+/***/ 9826:
 /***/ ((__unused_webpack_module, __webpack_exports__, __nccwpck_require__) => {
 
 "use strict";
@@ -4089,9 +4101,9 @@ __nccwpck_require__.d(__webpack_exports__, {
   "version": () => /* reexport */ esm_node_version
 });
 
-// CONCATENATED MODULE: external "crypto"
-const external_crypto_namespaceObject = require("crypto");;
-var external_crypto_default = /*#__PURE__*/__nccwpck_require__.n(external_crypto_namespaceObject);
+// EXTERNAL MODULE: external "crypto"
+var external_crypto_ = __nccwpck_require__(6417);
+var external_crypto_default = /*#__PURE__*/__nccwpck_require__.n(external_crypto_);
 
 // CONCATENATED MODULE: ./node_modules/@actions/core/node_modules/uuid/dist/esm-node/rng.js
 
@@ -36704,6 +36716,14 @@ module.exports = require("buffer");;
 
 "use strict";
 module.exports = require("child_process");;
+
+/***/ }),
+
+/***/ 6417:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("crypto");;
 
 /***/ }),
 

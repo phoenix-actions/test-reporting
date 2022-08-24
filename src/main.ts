@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
+import {createHash} from 'crypto'
 import {GitHub} from '@actions/github/lib/utils'
 
 import {ArtifactProvider} from './input-providers/artifact-provider'
@@ -30,6 +31,16 @@ async function main(): Promise<void> {
   }
 }
 
+function createSlugPrefix(): string {
+  const step_summary = process.env['GITHUB_STEP_SUMMARY']
+  if (!step_summary || step_summary === '') {
+    return ''
+  }
+  const hash = createHash('sha1')
+  hash.update(step_summary)
+  return hash.digest('hex').substring(0, 8)
+}
+
 class TestReporter {
   readonly artifact = core.getInput('artifact', {required: false})
   readonly name = core.getInput('name', {required: true})
@@ -44,6 +55,7 @@ class TestReporter {
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
   readonly outputTo = core.getInput('output-to', {required: false})
   readonly token = core.getInput('token', {required: true})
+  readonly slugPrefix = createSlugPrefix()
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
 
@@ -180,8 +192,8 @@ class TestReporter {
     }
 
     core.info('Creating report summary')
-    const {listSuites, listTests, onlySummary} = this
-    const summary = getReport(results, {listSuites, listTests, baseUrl, onlySummary})
+    const {listSuites, listTests, onlySummary, slugPrefix} = this
+    const summary = getReport(results, {listSuites, listTests, baseUrl, slugPrefix, onlySummary})
 
     core.info('Creating annotations')
     const annotations = getAnnotations(results, this.maxAnnotations)

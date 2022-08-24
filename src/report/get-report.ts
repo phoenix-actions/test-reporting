@@ -9,6 +9,7 @@ const MAX_REPORT_LENGTH = 65535
 export interface ReportOptions {
   listSuites: 'all' | 'failed'
   listTests: 'all' | 'failed' | 'none'
+  slugPrefix: string
   baseUrl: string
   onlySummary: boolean
 }
@@ -16,6 +17,7 @@ export interface ReportOptions {
 const defaultOptions: ReportOptions = {
   listSuites: 'all',
   listTests: 'all',
+  slugPrefix: '',
   baseUrl: '',
   onlySummary: false
 }
@@ -138,7 +140,7 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
     const tableData = testRuns.map((tr, runIndex) => {
       const time = formatTime(tr.time)
       const name = tr.path
-      const addr = options.baseUrl + makeRunSlug(runIndex).link
+      const addr = options.baseUrl + makeRunSlug(runIndex, options.slugPrefix).link
       const nameLink = link(name, addr)
       const passed = tr.passed > 0 ? `${tr.passed}${Icon.success}` : ''
       const failed = tr.failed > 0 ? `${tr.failed}${Icon.fail}` : ''
@@ -164,7 +166,7 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
 function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOptions): string[] {
   const sections: string[] = []
 
-  const trSlug = makeRunSlug(runIndex)
+  const trSlug = makeRunSlug(runIndex, options.slugPrefix)
   const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`
   const icon = getResultIcon(tr.result)
   sections.push(`## ${icon}\xa0${nameLink}`)
@@ -185,7 +187,7 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
         const tsTime = formatTime(s.time)
         const tsName = s.name
         const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed')
-        const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link
+        const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex, options.slugPrefix).link
         const tsNameLink = skipLink ? tsName : link(tsName, tsAddr)
         const passed = s.passed > 0 ? `${s.passed}${Icon.success}` : ''
         const failed = s.failed > 0 ? `${s.failed}${Icon.fail}` : ''
@@ -219,7 +221,7 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
   const sections: string[] = []
 
   const tsName = ts.name
-  const tsSlug = makeSuiteSlug(runIndex, suiteIndex)
+  const tsSlug = makeSuiteSlug(runIndex, suiteIndex, options.slugPrefix)
   const tsNameLink = `<a id="${tsSlug.id}" href="${options.baseUrl + tsSlug.link}">${tsName}</a>`
   const icon = getResultIcon(ts.result)
   sections.push(`### ${icon}\xa0${tsNameLink}`)
@@ -251,14 +253,14 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
   return sections
 }
 
-function makeRunSlug(runIndex: number): {id: string; link: string} {
+function makeRunSlug(runIndex: number, slugPrefix: string): {id: string; link: string} {
   // use prefix to avoid slug conflicts after escaping the paths
-  return slug(`r${runIndex}`)
+  return slug(`r${slugPrefix}${runIndex}`)
 }
 
-function makeSuiteSlug(runIndex: number, suiteIndex: number): {id: string; link: string} {
+function makeSuiteSlug(runIndex: number, suiteIndex: number, slugPrefix: string): {id: string; link: string} {
   // use prefix to avoid slug conflicts after escaping the paths
-  return slug(`r${runIndex}s${suiteIndex}`)
+  return slug(`r${slugPrefix}${runIndex}s${suiteIndex}`)
 }
 
 function getResultIcon(result: TestExecutionResult): string {

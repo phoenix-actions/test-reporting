@@ -259,7 +259,7 @@ class TestReporter {
         this.onlySummary = core.getInput('only-summary', { required: false }) === 'true';
         this.outputTo = core.getInput('output-to', { required: false });
         this.token = core.getInput('token', { required: true });
-        this.slugPrefix = createSlugPrefix();
+        this.slugPrefix = '';
         this.context = github_utils_1.getCheckRunContext();
         this.octokit = github.getOctokit(this.token);
         if (this.listSuites !== 'all' && this.listSuites !== 'failed') {
@@ -277,6 +277,9 @@ class TestReporter {
         if (this.outputTo !== 'checks' && this.outputTo !== 'step-summary') {
             core.setFailed(`Input parameter 'output-to' has invalid value`);
             return;
+        }
+        if (this.outputTo === 'step-summary') {
+            this.slugPrefix = createSlugPrefix();
         }
     }
     async run() {

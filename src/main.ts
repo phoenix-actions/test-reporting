@@ -55,7 +55,7 @@ class TestReporter {
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
   readonly outputTo = core.getInput('output-to', {required: false})
   readonly token = core.getInput('token', {required: true})
-  readonly slugPrefix = createSlugPrefix()
+  readonly slugPrefix: string = ''
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
 
@@ -80,6 +80,10 @@ class TestReporter {
     if (this.outputTo !== 'checks' && this.outputTo !== 'step-summary') {
       core.setFailed(`Input parameter 'output-to' has invalid value`)
       return
+    }
+
+    if (this.outputTo === 'step-summary') {
+      this.slugPrefix = createSlugPrefix()
     }
   }
 

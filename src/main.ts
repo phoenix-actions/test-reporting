@@ -209,6 +209,7 @@ class TestReporter {
       }
       case 'step-summary': {
         core.summary.addHeading(shortSummary)
+        core.summary.addSeparator()
         core.summary.addRaw(summary)
         for (const annotation of annotations) {
           let fn

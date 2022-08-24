@@ -64,6 +64,7 @@ describe('dotnet-trx tests', () => {
       listSuites: 'all',
       listTests: 'failed',
       onlySummary: false,
+      slugPrefix: '',
       baseUrl: ''
     }
     const report = getReport([result], reportOptions)

@@ -339,6 +339,7 @@ class TestReporter {
         }
     }
     async createReport(parser, name, files) {
+        var _a;
         if (files.length === 0) {
             core.warning(`No file matches path ${this.path}`);
             return [];
@@ -350,20 +351,28 @@ class TestReporter {
             results.push(tr);
         }
         let createResp = null, baseUrl = '', check_run_id = 0;
-        if (this.outputTo === 'checks') {
-            core.info(`Creating check run ${name}`);
-            createResp = await this.octokit.checks.create({
-                head_sha: this.context.sha,
-                name,
-                status: 'in_progress',
-                output: {
-                    title: name,
-                    summary: ''
-                },
-                ...github.context.repo
-            });
-            baseUrl = createResp.data.html_url;
-            check_run_id = createResp.data.id;
+        switch (this.outputTo) {
+            case 'checks': {
+                core.info(`Creating check run ${name}`);
+                createResp = await this.octokit.checks.create({
+                    head_sha: this.context.sha,
+                    name,
+                    status: 'in_progress',
+                    output: {
+                        title: name,
+                        summary: ''
+                    },
+                    ...github.context.repo
+                });
+                baseUrl = createResp.data.html_url;
+                check_run_id = createResp.data.id;
+                break;
+            }
+            case 'step-summary': {
+                const run_attempt = (_a = process.env['GITHUB_RUN_ATTEMPT']) !== null && _a !== void 0 ? _a : 1;
+                baseUrl = `https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId}/attempts/${run_attempt}`;
+                break;
+            }
         }
         core.info('Creating report summary');
         const { listSuites, listTests, onlySummary, slugPrefix } = this;

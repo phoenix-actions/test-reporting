@@ -179,20 +179,29 @@ class TestReporter {
     let createResp = null,
       baseUrl = '',
       check_run_id = 0
-    if (this.outputTo === 'checks') {
-      core.info(`Creating check run ${name}`)
-      createResp = await this.octokit.checks.create({
-        head_sha: this.context.sha,
-        name,
-        status: 'in_progress',
-        output: {
-          title: name,
-          summary: ''
-        },
-        ...github.context.repo
-      })
-      baseUrl = createResp.data.html_url
-      check_run_id = createResp.data.id
+
+    switch (this.outputTo) {
+      case 'checks': {
+        core.info(`Creating check run ${name}`)
+        createResp = await this.octokit.checks.create({
+          head_sha: this.context.sha,
+          name,
+          status: 'in_progress',
+          output: {
+            title: name,
+            summary: ''
+          },
+          ...github.context.repo
+        })
+        baseUrl = createResp.data.html_url
+        check_run_id = createResp.data.id
+        break
+      }
+      case 'step-summary': {
+        const run_attempt = process.env['GITHUB_RUN_ATTEMPT'] ?? 1
+        baseUrl = `https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId}/attempts/${run_attempt}`
+        break
+      }
     }
 
     core.info('Creating report summary')

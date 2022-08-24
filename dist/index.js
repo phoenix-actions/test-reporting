@@ -335,20 +335,24 @@ class TestReporter {
             const tr = await parser.parse(file, content);
             results.push(tr);
         }
-        core.info(`Creating check run ${name}`);
-        const createResp = await this.octokit.checks.create({
-            head_sha: this.context.sha,
-            name,
-            status: 'in_progress',
-            output: {
-                title: name,
-                summary: ''
-            },
-            ...github.context.repo
-        });
+        let createResp = null, baseUrl = '', check_run_id = 0;
+        if (this.outputTo === 'checks') {
+            core.info(`Creating check run ${name}`);
+            createResp = await this.octokit.checks.create({
+                head_sha: this.context.sha,
+                name,
+                status: 'in_progress',
+                output: {
+                    title: name,
+                    summary: ''
+                },
+                ...github.context.repo
+            });
+            baseUrl = createResp.data.html_url;
+            check_run_id = createResp.data.id;
+        }
         core.info('Creating report summary');
         const { listSuites, listTests, onlySummary } = this;
-        const baseUrl = createResp.data.html_url;
         const summary = get_report_1.getReport(results, { listSuites, listTests, baseUrl, onlySummary });
         core.info('Creating annotations');
         const annotations = get_annotations_1.getAnnotations(results, this.maxAnnotations);
@@ -362,7 +366,7 @@ class TestReporter {
         switch (this.outputTo) {
             case 'checks': {
                 const resp = await this.octokit.checks.update({
-                    check_run_id: createResp.data.id,
+                    check_run_id,
                     conclusion,
                     status: 'completed',
                     output: {

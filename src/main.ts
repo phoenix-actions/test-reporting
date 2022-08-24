@@ -42,6 +42,7 @@ class TestReporter {
   readonly failOnError = core.getInput('fail-on-error', {required: true}) === 'true'
   readonly workDirInput = core.getInput('working-directory', {required: false})
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
+  readonly outputTo = core.getInput('output-to', {required: false})
   readonly token = core.getInput('token', {required: true})
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
@@ -61,6 +62,11 @@ class TestReporter {
 
     if (isNaN(this.maxAnnotations) || this.maxAnnotations < 0 || this.maxAnnotations > 50) {
       core.setFailed(`Input parameter 'max-annotations' has invalid value`)
+      return
+    }
+
+    if (this.outputTo !== 'checks' && this.outputTo !== 'step-summary') {
+      core.setFailed(`Input parameter 'output-to' has invalid value`)
       return
     }
   }
@@ -183,22 +189,55 @@ class TestReporter {
     const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `
 
     core.info(`Updating check run conclusion (${conclusion}) and output`)
-    const resp = await this.octokit.checks.update({
-      check_run_id: createResp.data.id,
-      conclusion,
-      status: 'completed',
-      output: {
-        title: shortSummary,
-        summary,
-        annotations
-      },
-      ...github.context.repo
-    })
-    core.info(`Check run create response: ${resp.status}`)
-    core.info(`Check run URL: ${resp.data.url}`)
-    core.info(`Check run HTML: ${resp.data.html_url}`)
+    switch (this.outputTo) {
+      case 'checks': {
+        const resp = await this.octokit.checks.update({
+          check_run_id: createResp.data.id,
+          conclusion,
+          status: 'completed',
+          output: {
+            title: shortSummary,
+            summary,
+            annotations
+          },
+          ...github.context.repo
+        })
+        core.info(`Check run create response: ${resp.status}`)
+        core.info(`Check run URL: ${resp.data.url}`)
+        core.info(`Check run HTML: ${resp.data.html_url}`)
+        break
+      }
+      case 'step-summary': {
+        core.summary.addHeading(shortSummary)
+        core.summary.addRaw(summary)
+        for (const annotation of annotations) {
+          let fn
+          switch (annotation.annotation_level) {
+            case 'failure':
+              fn = core.error
+              break
+            case 'warning':
+              fn = core.warning
+              break
+            case 'notice':
+              fn = core.notice
+              break
+            default:
+              continue
+          }
 
-    core.setOutput(Outputs.runHtmlUrl, `${resp.data.html_url}`)
+          fn(annotation.message, {
+            title: annotation.title,
+            file: annotation.path,
+            startLine: annotation.start_line,
+            endLine: annotation.end_line,
+            startColumn: annotation.start_column,
+            endColumn: annotation.end_column
+          })
+        }
+        break
+      }
+    }
 
     return results
   }

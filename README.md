@@ -187,6 +187,11 @@ jobs:
     #   none
     list-tests: 'all'
 
+    # The location to write the report to. Supported options:
+    #   checks
+    #   step-summary
+    output-to: 'checks'
+
     # Limits number of created annotations with error message and stack trace captured during test execution.
     # Must be less or equal to 50.
     max-annotations: '10'

@@ -381,6 +381,7 @@ class TestReporter {
                 core.summary.addHeading(shortSummary);
                 core.summary.addSeparator();
                 core.summary.addRaw(summary);
+                await core.summary.write();
                 for (const annotation of annotations) {
                     let fn;
                     switch (annotation.annotation_level) {

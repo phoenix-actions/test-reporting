@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
+import {createHash} from 'crypto'
 import {GitHub} from '@actions/github/lib/utils'
 
 import {ArtifactProvider} from './input-providers/artifact-provider'
@@ -30,6 +31,16 @@ async function main(): Promise<void> {
   }
 }
 
+function createSlugPrefix(): string {
+  const step_summary = process.env['GITHUB_STEP_SUMMARY']
+  if (!step_summary || step_summary === '') {
+    return ''
+  }
+  const hash = createHash('sha1')
+  hash.update(step_summary)
+  return hash.digest('hex').substring(0, 8)
+}
+
 class TestReporter {
   readonly artifact = core.getInput('artifact', {required: false})
   readonly name = core.getInput('name', {required: true})
@@ -42,7 +53,9 @@ class TestReporter {
   readonly failOnError = core.getInput('fail-on-error', {required: true}) === 'true'
   readonly workDirInput = core.getInput('working-directory', {required: false})
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
+  readonly outputTo = core.getInput('output-to', {required: false})
   readonly token = core.getInput('token', {required: true})
+  readonly slugPrefix: string = ''
   readonly octokit: InstanceType<typeof GitHub>
   readonly context = getCheckRunContext()
 
@@ -62,6 +75,15 @@ class TestReporter {
     if (isNaN(this.maxAnnotations) || this.maxAnnotations < 0 || this.maxAnnotations > 50) {
       core.setFailed(`Input parameter 'max-annotations' has invalid value`)
       return
+    }
+
+    if (this.outputTo !== 'checks' && this.outputTo !== 'step-summary') {
+      core.setFailed(`Input parameter 'output-to' has invalid value`)
+      return
+    }
+
+    if (this.outputTo === 'step-summary') {
+      this.slugPrefix = createSlugPrefix()
     }
   }
 
@@ -154,22 +176,37 @@ class TestReporter {
       results.push(tr)
     }
 
-    core.info(`Creating check run ${name}`)
-    const createResp = await this.octokit.checks.create({
-      head_sha: this.context.sha,
-      name,
-      status: 'in_progress',
-      output: {
-        title: name,
-        summary: ''
-      },
-      ...github.context.repo
-    })
+    let createResp = null,
+      baseUrl = '',
+      check_run_id = 0
+
+    switch (this.outputTo) {
+      case 'checks': {
+        core.info(`Creating check run ${name}`)
+        createResp = await this.octokit.checks.create({
+          head_sha: this.context.sha,
+          name,
+          status: 'in_progress',
+          output: {
+            title: name,
+            summary: ''
+          },
+          ...github.context.repo
+        })
+        baseUrl = createResp.data.html_url
+        check_run_id = createResp.data.id
+        break
+      }
+      case 'step-summary': {
+        const run_attempt = process.env['GITHUB_RUN_ATTEMPT'] ?? 1
+        baseUrl = `https://github.com/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId}/attempts/${run_attempt}`
+        break
+      }
+    }
 
     core.info('Creating report summary')
-    const {listSuites, listTests, onlySummary} = this
-    const baseUrl = createResp.data.html_url
-    const summary = getReport(results, {listSuites, listTests, baseUrl, onlySummary})
+    const {listSuites, listTests, onlySummary, slugPrefix} = this
+    const summary = getReport(results, {listSuites, listTests, baseUrl, slugPrefix, onlySummary})
 
     core.info('Creating annotations')
     const annotations = getAnnotations(results, this.maxAnnotations)
@@ -183,22 +220,56 @@ class TestReporter {
     const shortSummary = `${passed} passed, ${failed} failed and ${skipped} skipped `
 
     core.info(`Updating check run conclusion (${conclusion}) and output`)
-    const resp = await this.octokit.checks.update({
-      check_run_id: createResp.data.id,
-      conclusion,
-      status: 'completed',
-      output: {
-        title: shortSummary,
-        summary,
-        annotations
-      },
-      ...github.context.repo
-    })
-    core.info(`Check run create response: ${resp.status}`)
-    core.info(`Check run URL: ${resp.data.url}`)
-    core.info(`Check run HTML: ${resp.data.html_url}`)
+    switch (this.outputTo) {
+      case 'checks': {
+        const resp = await this.octokit.checks.update({
+          check_run_id,
+          conclusion,
+          status: 'completed',
+          output: {
+            title: shortSummary,
+            summary,
+            annotations
+          },
+          ...github.context.repo
+        })
+        core.info(`Check run create response: ${resp.status}`)
+        core.info(`Check run URL: ${resp.data.url}`)
+        core.info(`Check run HTML: ${resp.data.html_url}`)
+        break
+      }
+      case 'step-summary': {
+        core.summary.addRaw(`# ${shortSummary}`)
+        core.summary.addRaw(summary)
+        await core.summary.write()
+        for (const annotation of annotations) {
+          let fn
+          switch (annotation.annotation_level) {
+            case 'failure':
+              fn = core.error
+              break
+            case 'warning':
+              fn = core.warning
+              break
+            case 'notice':
+              fn = core.notice
+              break
+            default:
+              continue
+          }
 
-    core.setOutput(Outputs.runHtmlUrl, `${resp.data.html_url}`)
+          fn(annotation.message, {
+            title: annotation.title,
+            file: annotation.path,
+            startLine: annotation.start_line,
+            endLine: annotation.end_line,
+            startColumn: annotation.start_column,
+            endColumn: annotation.end_column
+          })
+        }
+        break
+      }
+    }
 
     return results
   }

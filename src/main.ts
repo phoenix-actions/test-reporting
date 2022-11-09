@@ -236,6 +236,7 @@ class TestReporter {
         core.info(`Check run create response: ${resp.status}`)
         core.info(`Check run URL: ${resp.data.url}`)
         core.info(`Check run HTML: ${resp.data.html_url}`)
+        core.setOutput(Outputs.runHtmlUrl, `${resp.data.html_url}`)
         break
       }
       case 'step-summary': {

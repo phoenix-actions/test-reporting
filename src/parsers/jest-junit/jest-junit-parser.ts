@@ -77,7 +77,7 @@ export class JestJunitParser implements TestParser {
   }
 
   private getTestCaseError(tc: TestCase): TestCaseError | undefined {
-    if (!this.options.parseErrors || !(tc.failure|| tc.error)) {
+    if (!this.options.parseErrors || !(tc.failure || tc.error)) {
       return undefined
     }
 

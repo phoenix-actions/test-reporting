@@ -6,7 +6,7 @@ export function getExceptionSource(
   getRelativePath: (str: string) => string
 ): {path: string; line: number} | undefined {
   const lines = stackTrace.split(/\r?\n/)
-  const re = /\((.*):(\d+):\d+\)$/
+  const re = /(?:\(| › )(.*):(\d+):\d+(?:\)$| › )/
 
   for (const str of lines) {
     const match = str.match(re)

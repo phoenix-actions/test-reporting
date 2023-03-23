@@ -1,0 +1,2 @@
+libs/foo.spec.ts
+tsconfig.json

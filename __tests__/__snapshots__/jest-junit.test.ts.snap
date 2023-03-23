@@ -89,6 +89,43 @@ TestRunResult {
 }
 `;
 
+exports[`jest-junit tests playwright testsuite errors example test results matches snapshot 1`] = `
+TestRunResult {
+  "path": "fixtures/test-errors/playwright/test-results.xml",
+  "suites": Array [
+    TestSuiteResult {
+      "groups": Array [
+        TestGroupResult {
+          "name": "libs/foo.spec.ts",
+          "tests": Array [
+            TestCaseResult {
+              "error": Object {
+                "details": "
+  [LRS:Chromium] › libs/foo.spec.ts:38:5 › Test suite failure 
+
+    locator.click: Error: strict mode violation: locator('button:text(\\"Email\\")') resolved to 2 elements:
+        1) <button data-testid=\\"first\\">Email</button> aka getByTestId('first')
+        2) <button data-testid=\\"second\\">Anoher Email</button> aka getByTestId('second')
+
+",
+                "line": 38,
+                "path": "libs/foo.spec.ts",
+              },
+              "name": "Test suite failure",
+              "result": "failed",
+              "time": 19340,
+            },
+          ],
+        },
+      ],
+      "name": "libs/foo.spec.ts",
+      "totalTime": 144328,
+    },
+  ],
+  "totalTime": 849,
+}
+`;
+
 exports[`jest-junit tests report from ./reports/jest test results matches snapshot 1`] = `
 TestRunResult {
   "path": "fixtures/jest-junit.xml",

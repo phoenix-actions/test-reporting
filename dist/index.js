@@ -1015,7 +1015,7 @@ class JavaJunitParser {
         return 'success';
     }
     getTestCaseError(tc) {
-        var _a;
+        var _a, _b;
         if (!this.options.parseErrors) {
             return undefined;
         }
@@ -1025,7 +1025,7 @@ class JavaJunitParser {
             return undefined;
         }
         const failure = failures[0];
-        const details = typeof failure === 'object' ? failure._ : failure;
+        const details = typeof failure === 'object' ? (_b = failure._) !== null && _b !== void 0 ? _b : "" : failure;
         let filePath;
         let line;
         const src = this.exceptionThrowSource(details);

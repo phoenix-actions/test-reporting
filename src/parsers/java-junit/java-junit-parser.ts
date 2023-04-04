@@ -66,8 +66,7 @@ export class JavaJunitParser implements TestParser {
         : junit.testsuites.testsuite.map(ts => {
             const name = ts.$.name.trim()
             const time = parseFloat(ts.$.time) * 1000
-            const sr = new TestSuiteResult(name, this.getGroups(ts), time)
-            return sr
+            return new TestSuiteResult(name, this.getGroups(ts), time)
           })
 
     const seconds = parseFloat(junit.testsuites.$?.time)
@@ -124,7 +123,7 @@ export class JavaJunitParser implements TestParser {
     }
 
     const failure = failures[0]
-    const details = typeof failure === 'object' ? failure._ : failure
+    const details = typeof failure === 'object' ? failure._  ?? "" : failure
     let filePath
     let line
 

@@ -39,7 +39,7 @@ export interface TestCase {
 }
 
 export interface Failure {
-  _: string
+  _?: string
   type: string
   message: string
 }

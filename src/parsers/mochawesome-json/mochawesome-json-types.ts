@@ -1,23 +1,17 @@
 export interface MochawesomeJson {
   stats: MochawesomeJsonStat
-  results: MochawesomeJsonResult[]
+  results: MochawesomeJsonSuite[]
 }
 
 export interface MochawesomeJsonStat {
   duration: number
 }
 
-export interface MochawesomeJsonResult {
-  tests: MochawesomeJsonTest[]
-  suites: MochawesomeJsonSuite[]
-  fullFile: string
-  title: string
-}
-
 export interface MochawesomeJsonSuite {
   tests: MochawesomeJsonTest[]
   suites: MochawesomeJsonSuite[]
   fullFile: string
+  title: string
 }
 
 export interface MochawesomeJsonTest {

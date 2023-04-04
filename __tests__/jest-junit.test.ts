@@ -109,4 +109,26 @@ describe('jest-junit tests', () => {
     fs.mkdirSync(path.dirname(outputPath), {recursive: true})
     fs.writeFileSync(outputPath, report)
   })
+
+  it('playwright testsuite errors example test results matches snapshot', async () => {
+    const fixturePath = path.join(__dirname, 'fixtures', 'test-errors', 'playwright', 'test-results.xml')
+    const trackedFilesPath = path.join(__dirname, 'fixtures', 'test-errors', 'playwright', 'files.txt')
+    const outputPath = path.join(__dirname, '__outputs__', 'playwright-test-errors-results.md')
+    const filePath = normalizeFilePath(path.relative(__dirname, fixturePath))
+    const fileContent = fs.readFileSync(fixturePath, {encoding: 'utf8'})
+
+    const trackedFiles = fs.readFileSync(trackedFilesPath, {encoding: 'utf8'}).split(/\n\r?/g)
+    const opts: ParseOptions = {
+      parseErrors: true,
+      trackedFiles
+    }
+
+    const parser = new JestJunitParser(opts)
+    const result = await parser.parse(filePath, fileContent)
+    expect(result).toMatchSnapshot()
+
+    const report = getReport([result])
+    fs.mkdirSync(path.dirname(outputPath), {recursive: true})
+    fs.writeFileSync(outputPath, report)
+  })
 })

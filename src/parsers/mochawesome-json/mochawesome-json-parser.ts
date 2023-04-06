@@ -114,7 +114,7 @@ export class MochawesomeJsonParser implements TestParser {
       // Process tests that are in a suite
       if (suites?.length > 0) {
         for (const suite of suites) {
-          processNestedSuites(suite, 0, filePath ? filePath : result?.title)
+          processNestedSuites(suite, 0, filePath ? filePath : suite.title)
         }
       }
     }

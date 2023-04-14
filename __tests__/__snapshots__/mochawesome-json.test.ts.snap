@@ -24,6 +24,12 @@ TestRunResult {
             },
           ],
         },
+      ],
+      "name": "In-line test with no file",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
         TestGroupResult {
           "name": "Test 1",
           "tests": Array [
@@ -73,6 +79,12 @@ false !== true
             },
           ],
         },
+      ],
+      "name": "Test 1",
+      "totalTime": undefined,
+    },
+    TestSuiteResult {
+      "groups": Array [
         TestGroupResult {
           "name": "Test 2",
           "tests": Array [
@@ -92,7 +104,7 @@ false !== true
           ],
         },
       ],
-      "name": "nofile",
+      "name": "Test 2",
       "totalTime": undefined,
     },
   ],

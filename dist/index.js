@@ -972,8 +972,7 @@ class JavaJunitParser {
             : junit.testsuites.testsuite.map(ts => {
                 const name = ts.$.name.trim();
                 const time = parseFloat(ts.$.time) * 1000;
-                const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
-                return sr;
+                return new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
             });
         const seconds = parseFloat((_a = junit.testsuites.$) === null || _a === void 0 ? void 0 : _a.time);
         const time = isNaN(seconds) ? undefined : seconds * 1000;
@@ -1172,7 +1171,13 @@ class JestJunitParser {
         if (!this.options.parseErrors || !(tc.failure || tc.error)) {
             return undefined;
         }
-        const details = tc.failure ? tc.failure[0] : tc.error ? tc.error[0] : 'unknown failure';
+        const details = tc.failure
+            ? typeof tc.failure[0] === 'string'
+                ? tc.failure[0]
+                : tc.failure[0]._
+            : tc.error
+                ? tc.error[0]
+                : 'unknown failure';
         let path;
         let line;
         const src = node_utils_1.getExceptionSource(details, this.options.trackedFiles, file => this.getRelativePath(file));
@@ -1404,7 +1409,7 @@ class MochawesomeJsonParser {
             // Process tests that are in a suite
             if ((suites === null || suites === void 0 ? void 0 : suites.length) > 0) {
                 for (const suite of suites) {
-                    processNestedSuites(suite, 0, filePath ? filePath : result === null || result === void 0 ? void 0 : result.title);
+                    processNestedSuites(suite, 0, filePath ? filePath : suite.title);
                 }
             }
         }
@@ -2233,7 +2238,7 @@ exports.getExceptionSource = void 0;
 const path_utils_1 = __nccwpck_require__(4070);
 function getExceptionSource(stackTrace, trackedFiles, getRelativePath) {
     const lines = stackTrace.split(/\r?\n/);
-    const re = /\((.*):(\d+):\d+\)$/;
+    const re = /(?:\(| › )(.*):(\d+):\d+(?:\)$| › )/;
     for (const str of lines) {
         const match = str.match(re);
         if (match !== null) {
@@ -20663,6 +20668,7 @@ const statusCodeCacheableByDefault = new Set([
     206,
     300,
     301,
+    308,
     404,
     405,
     410,
@@ -20735,10 +20741,10 @@ function parseCacheControl(header) {
 
     // TODO: When there is more than one value present for a given directive (e.g., two Expires header fields, multiple Cache-Control: max-age directives),
     // the directive's value is considered invalid. Caches are encouraged to consider responses that have invalid freshness information to be stale
-    const parts = header.trim().split(/\s*,\s*/); // TODO: lame parsing
+    const parts = header.trim().split(/,/);
     for (const part of parts) {
-        const [k, v] = part.split(/\s*=\s*/, 2);
-        cc[k] = v === undefined ? true : v.replace(/^"|"$/g, ''); // TODO: lame unquoting
+        const [k, v] = part.split(/=/, 2);
+        cc[k.trim()] = v === undefined ? true : v.trim().replace(/^"|"$/g, '');
     }
 
     return cc;

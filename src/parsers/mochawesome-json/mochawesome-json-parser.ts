@@ -32,13 +32,11 @@ export class MochawesomeJsonParser implements TestParser {
   }
 
   private getTestRunResult(resultsPath: string, mochawesome: MochawesomeJson): TestRunResult {
-    const suitesMap: {[path: string]: TestSuiteResult} = {}
-
+    const suitesMap: {[name: string]: TestSuiteResult} = {}
     const results = mochawesome.results
 
-    const getSuite = (fullFile: string): TestSuiteResult => {
-      const path = this.getRelativePath(fullFile)
-      return suitesMap[path] ?? (suitesMap[path] = new TestSuiteResult(path, []))
+    const getSuite = (suiteName: string): TestSuiteResult => {
+      return suitesMap[suiteName] ?? (suitesMap[suiteName] = new TestSuiteResult(suiteName, []))
     }
 
     const processPassingTests = (tests: MochawesomeJsonTest[], suiteName: string): void => {
@@ -103,18 +101,17 @@ export class MochawesomeJsonParser implements TestParser {
     // Process Mochawesome Data
     for (const result of results) {
       const suites = result?.suites
-      const filePath = result?.fullFile
       const suitelessTests = result?.tests
 
       // Process tests that aren't in a suite
       if (suitelessTests?.length > 0) {
-        processAllTests(suitelessTests, filePath)
+        processAllTests(suitelessTests, result?.title)
       }
 
       // Process tests that are in a suite
       if (suites?.length > 0) {
         for (const suite of suites) {
-          processNestedSuites(suite, 0, filePath ? filePath : suite.title)
+          processNestedSuites(suite, 0, suite.title)
         }
       }
     }

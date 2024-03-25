@@ -36,6 +36,7 @@ function createSlugPrefix(): string {
   if (!step_summary || step_summary === '') {
     return ''
   }
+
   const hash = createHash('sha1')
   hash.update(step_summary)
   return hash.digest('hex').substring(0, 8)

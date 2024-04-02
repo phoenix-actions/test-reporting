@@ -6,6 +6,9 @@ on:
     types:
       - completed
 
+permissions:
+  checks: write
+
 jobs:
   report:
     name: Workflow test

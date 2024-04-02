@@ -133,11 +133,18 @@ export class JavaJunitParser implements TestParser {
       line = src.line
     }
 
+    let message
+    if(typeof failure === 'object') {
+      message = failure.$.message
+      if(failure.$?.type) {
+        message = failure.$.type + ": "+ message
+      }
+    }
     return {
       path: filePath,
       line,
       details,
-      message: typeof failure === 'object' ? failure.message : undefined
+      message
     }
   }
 

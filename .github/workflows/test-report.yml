@@ -7,9 +7,6 @@ on:
       - completed
   workflow_dispatch:
 
-permissions:
-  checks: write
-
 jobs:
   report:
     name: Workflow test

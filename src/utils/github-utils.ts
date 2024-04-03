@@ -47,9 +47,6 @@ export async function downloadArtifact(
       archive_format: 'zip'
     })
 
-    const headers = {
-      Authorization: `Bearer ${token}`
-    }
     const resp = await got(req.url, {
       headers,
       followRedirect: false
@@ -70,7 +67,7 @@ export async function downloadArtifact(
       throw new Error(`Location header has unexpected value: ${url}`)
     }
 
-    const downloadStream = got.stream(url, {headers})
+    const downloadStream = got.stream(url)
     const fileWriterStream = createWriteStream(fileName)
 
     core.info(`Downloading ${url}`)

@@ -47,6 +47,8 @@ export async function downloadArtifact(
       archive_format: 'zip'
     })
 
+    const headers = {}
+
     const resp = await got(req.url, {
       headers,
       followRedirect: false

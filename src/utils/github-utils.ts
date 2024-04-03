@@ -34,8 +34,7 @@ export function getCheckRunContext(): {sha: string; runId: number} {
 export async function downloadArtifact(
   octokit: InstanceType<typeof GitHub>,
   artifactId: number,
-  fileName: string,
-  token: string
+  fileName: string
 ): Promise<void> {
   core.startGroup(`Downloading artifact ${fileName}`)
   try {

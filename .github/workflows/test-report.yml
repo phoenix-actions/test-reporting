@@ -5,7 +5,9 @@ on:
     workflows: ['CI']
     types:
       - completed
-  workflow_dispatch:
+
+permissions:
+  actions: read
 
 jobs:
   report:

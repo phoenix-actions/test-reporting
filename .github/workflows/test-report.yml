@@ -5,7 +5,10 @@ on:
     workflows: ['CI']
     types:
       - completed
-  workflow_dispatch:
+
+permissions:
+  actions: read
+  checks: write
 
 jobs:
   report:
@@ -14,9 +17,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: ./
+      - name: Create test report
+        uses: ./
         with:
           artifact: test-results
           name: Workflow Report
           path: '*.xml'
           reporter: jest-junit
+
+      - name: Create mochawesome report
+        uses: ./
+        if: success() || failure()
+        with:
+          name: Mochawesome Tests
+          path: __tests__/fixtures/mochawesome-json.json
+          reporter: mochawesome-json
+          fail-on-error: false

@@ -9,8 +9,9 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: read
   checks: write
-
+    
 jobs:
   build-test:
     name: Build & Test
@@ -32,10 +33,10 @@ jobs:
 
       - name: Create test report
         uses: ./
-        if: success() || failure()
         with:
-          name: JEST Tests
-          path: __tests__/__results__/*.xml
+          artifact: test-results
+          name: Workflow Report
+          path: '*.xml'
           reporter: jest-junit
 
       - name: Create mochawesome report
@@ -46,3 +47,4 @@ jobs:
           path: __tests__/fixtures/mochawesome-json.json
           reporter: mochawesome-json
           fail-on-error: false
+  

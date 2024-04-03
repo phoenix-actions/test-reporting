@@ -3,12 +3,12 @@
 exports[`dotnet-trx tests matches report snapshot (only failed tests) 1`] = `
 TestRunResult {
   "path": "fixtures/dotnet-trx.trx",
-  "suites": Array [
+  "suites": [
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Custom Name",
@@ -16,10 +16,10 @@ TestRunResult {
               "time": 0.1371,
             },
             TestCaseResult {
-              "error": Object {
+              "error": {
                 "details": "System.DivideByZeroException : Attempted to divide by zero.
-   at DotnetTests.Unit.Calculator.Div(Int32 a, Int32 b) in C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-reporting\\\\reports\\\\dotnet\\\\DotnetTests.Unit\\\\Calculator.cs:line 9
-   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_TargetTest() in C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-reporting\\\\reports\\\\dotnet\\\\DotnetTests.XUnitTests\\\\CalculatorTests.cs:line 33",
+   at DotnetTests.Unit.Calculator.Div(Int32 a, Int32 b) in C:\\Users\\Michal\\Workspace\\dorny\\test-reporting\\reports\\dotnet\\DotnetTests.Unit\\Calculator.cs:line 9
+   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_TargetTest() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporting\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 33",
                 "line": 9,
                 "message": "System.DivideByZeroException : Attempted to divide by zero.",
                 "path": "DotnetTests.Unit/Calculator.cs",
@@ -29,9 +29,9 @@ TestRunResult {
               "time": 0.8377,
             },
             TestCaseResult {
-              "error": Object {
+              "error": {
                 "details": "System.Exception : Test
-   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_Test() in C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-reporting\\\\reports\\\\dotnet\\\\DotnetTests.XUnitTests\\\\CalculatorTests.cs:line 39",
+   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_Test() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporting\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 39",
                 "line": 39,
                 "message": "System.Exception : Test",
                 "path": "DotnetTests.XUnitTests/CalculatorTests.cs",
@@ -41,11 +41,11 @@ TestRunResult {
               "time": 2.5175,
             },
             TestCaseResult {
-              "error": Object {
+              "error": {
                 "details": "Assert.Equal() Failure
 Expected: 3
 Actual:   2
-   at DotnetTests.XUnitTests.CalculatorTests.Failing_Test() in C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-reporting\\\\reports\\\\dotnet\\\\DotnetTests.XUnitTests\\\\CalculatorTests.cs:line 27",
+   at DotnetTests.XUnitTests.CalculatorTests.Failing_Test() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporting\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 27",
                 "line": 27,
                 "message": "Assert.Equal() Failure
 Expected: 3
@@ -63,11 +63,11 @@ Actual:   2",
               "time": 0.0078,
             },
             TestCaseResult {
-              "error": Object {
+              "error": {
                 "details": "Assert.True() Failure
 Expected: True
 Actual:   False
-   at DotnetTests.XUnitTests.CalculatorTests.Is_Even_Number(Int32 i) in C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-reporting\\\\reports\\\\dotnet\\\\DotnetTests.XUnitTests\\\\CalculatorTests.cs:line 59",
+   at DotnetTests.XUnitTests.CalculatorTests.Is_Even_Number(Int32 i) in C:\\Users\\Michal\\Workspace\\dorny\\test-reporting\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 59",
                 "line": 59,
                 "message": "Assert.True() Failure
 Expected: True
@@ -91,11 +91,11 @@ Actual:   False",
               "time": 0.0097,
             },
             TestCaseResult {
-              "error": Object {
+              "error": {
                 "details": "Assert.True() Failure
 Expected: True
 Actual:   False
-   at DotnetTests.XUnitTests.CalculatorTests.Theory_With_Custom_Name(Int32 i) in C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-reporting\\\\reports\\\\dotnet\\\\DotnetTests.XUnitTests\\\\CalculatorTests.cs:line 67",
+   at DotnetTests.XUnitTests.CalculatorTests.Theory_With_Custom_Name(Int32 i) in C:\\Users\\Michal\\Workspace\\dorny\\test-reporting\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 67",
                 "line": 67,
                 "message": "Assert.True() Failure
 Expected: True
@@ -132,12 +132,12 @@ Actual:   False",
 exports[`dotnet-trx tests matches report snapshot 1`] = `
 TestRunResult {
   "path": "fixtures/dotnet-trx.trx",
-  "suites": Array [
+  "suites": [
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Custom Name",
@@ -145,10 +145,10 @@ TestRunResult {
               "time": 0.1371,
             },
             TestCaseResult {
-              "error": Object {
+              "error": {
                 "details": "System.DivideByZeroException : Attempted to divide by zero.
-   at DotnetTests.Unit.Calculator.Div(Int32 a, Int32 b) in C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-reporting\\\\reports\\\\dotnet\\\\DotnetTests.Unit\\\\Calculator.cs:line 9
-   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_TargetTest() in C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-reporting\\\\reports\\\\dotnet\\\\DotnetTests.XUnitTests\\\\CalculatorTests.cs:line 33",
+   at DotnetTests.Unit.Calculator.Div(Int32 a, Int32 b) in C:\\Users\\Michal\\Workspace\\dorny\\test-reporting\\reports\\dotnet\\DotnetTests.Unit\\Calculator.cs:line 9
+   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_TargetTest() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporting\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 33",
                 "line": 9,
                 "message": "System.DivideByZeroException : Attempted to divide by zero.",
                 "path": "DotnetTests.Unit/Calculator.cs",
@@ -158,9 +158,9 @@ TestRunResult {
               "time": 0.8377,
             },
             TestCaseResult {
-              "error": Object {
+              "error": {
                 "details": "System.Exception : Test
-   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_Test() in C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-reporting\\\\reports\\\\dotnet\\\\DotnetTests.XUnitTests\\\\CalculatorTests.cs:line 39",
+   at DotnetTests.XUnitTests.CalculatorTests.Exception_In_Test() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporting\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 39",
                 "line": 39,
                 "message": "System.Exception : Test",
                 "path": "DotnetTests.XUnitTests/CalculatorTests.cs",
@@ -170,11 +170,11 @@ TestRunResult {
               "time": 2.5175,
             },
             TestCaseResult {
-              "error": Object {
+              "error": {
                 "details": "Assert.Equal() Failure
 Expected: 3
 Actual:   2
-   at DotnetTests.XUnitTests.CalculatorTests.Failing_Test() in C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-reporting\\\\reports\\\\dotnet\\\\DotnetTests.XUnitTests\\\\CalculatorTests.cs:line 27",
+   at DotnetTests.XUnitTests.CalculatorTests.Failing_Test() in C:\\Users\\Michal\\Workspace\\dorny\\test-reporting\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 27",
                 "line": 27,
                 "message": "Assert.Equal() Failure
 Expected: 3
@@ -192,11 +192,11 @@ Actual:   2",
               "time": 0.0078,
             },
             TestCaseResult {
-              "error": Object {
+              "error": {
                 "details": "Assert.True() Failure
 Expected: True
 Actual:   False
-   at DotnetTests.XUnitTests.CalculatorTests.Is_Even_Number(Int32 i) in C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-reporting\\\\reports\\\\dotnet\\\\DotnetTests.XUnitTests\\\\CalculatorTests.cs:line 59",
+   at DotnetTests.XUnitTests.CalculatorTests.Is_Even_Number(Int32 i) in C:\\Users\\Michal\\Workspace\\dorny\\test-reporting\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 59",
                 "line": 59,
                 "message": "Assert.True() Failure
 Expected: True
@@ -220,11 +220,11 @@ Actual:   False",
               "time": 0.0097,
             },
             TestCaseResult {
-              "error": Object {
+              "error": {
                 "details": "Assert.True() Failure
 Expected: True
 Actual:   False
-   at DotnetTests.XUnitTests.CalculatorTests.Theory_With_Custom_Name(Int32 i) in C:\\\\Users\\\\Michal\\\\Workspace\\\\dorny\\\\test-reporting\\\\reports\\\\dotnet\\\\DotnetTests.XUnitTests\\\\CalculatorTests.cs:line 67",
+   at DotnetTests.XUnitTests.CalculatorTests.Theory_With_Custom_Name(Int32 i) in C:\\Users\\Michal\\Workspace\\dorny\\test-reporting\\reports\\dotnet\\DotnetTests.XUnitTests\\CalculatorTests.cs:line 67",
                 "line": 67,
                 "message": "Assert.True() Failure
 Expected: True
@@ -261,12 +261,12 @@ Actual:   False",
 exports[`dotnet-trx tests report from FluentValidation test results matches snapshot 1`] = `
 TestRunResult {
   "path": "fixtures/external/FluentValidation.Tests.trx",
-  "suites": Array [
+  "suites": [
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Can_replace_default_errorcode_resolver",
@@ -484,10 +484,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Benchmark",
@@ -525,10 +525,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Finds_validators_for_types",
@@ -548,10 +548,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Cascade_mode_can_be_set_after_validator_instantiated",
@@ -787,10 +787,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Can_validate_using_validator_for_base_type",
@@ -876,10 +876,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Options_should_only_apply_to_current_validator",
@@ -905,10 +905,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Can_define_nested_rules_for_collection",
@@ -928,10 +928,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Async_condition_should_work_with_child_collection",
@@ -1035,10 +1035,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Async_condition_should_work_with_complex_property",
@@ -1148,10 +1148,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Async_condition_executed_synchronosuly_with_asynchronous_collection_rule",
@@ -1267,10 +1267,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "IsValidTests",
@@ -1290,10 +1290,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Does_not_invoke_action_if_validation_success",
@@ -1319,10 +1319,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Replaces_propertyvalue_placeholder",
@@ -1366,10 +1366,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "New_Custom_Returns_single_failure",
@@ -1437,10 +1437,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Empty_should_create_EmptyValidator",
@@ -1628,139 +1628,139 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
-              "name": "Fails_email_validation_aspnetcore_compatible(email: \\" \\\\r \\\\t \\\\n\\")",
+              "name": "Fails_email_validation_aspnetcore_compatible(email: \" \\r \\t \\n\")",
               "result": "success",
               "time": 0.0247,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Fails_email_validation_aspnetcore_compatible(email: \\"\\")",
+              "name": "Fails_email_validation_aspnetcore_compatible(email: \"\")",
               "result": "success",
               "time": 0.0314,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Fails_email_validation_aspnetcore_compatible(email: \\"@someDomain.com\\")",
+              "name": "Fails_email_validation_aspnetcore_compatible(email: \"@someDomain.com\")",
               "result": "success",
               "time": 0.0248,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Fails_email_validation_aspnetcore_compatible(email: \\"@someDomain@abc.com\\")",
+              "name": "Fails_email_validation_aspnetcore_compatible(email: \"@someDomain@abc.com\")",
               "result": "success",
               "time": 0.0234,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Fails_email_validation_aspnetcore_compatible(email: \\"0\\")",
+              "name": "Fails_email_validation_aspnetcore_compatible(email: \"0\")",
               "result": "success",
               "time": 0.2222,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Fails_email_validation_aspnetcore_compatible(email: \\"someName\\")",
+              "name": "Fails_email_validation_aspnetcore_compatible(email: \"someName\")",
               "result": "success",
               "time": 0.023,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Fails_email_validation_aspnetcore_compatible(email: \\"someName@\\")",
+              "name": "Fails_email_validation_aspnetcore_compatible(email: \"someName@\")",
               "result": "success",
               "time": 0.022699999999999998,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Fails_email_validation_aspnetcore_compatible(email: \\"someName@a@b.com\\")",
+              "name": "Fails_email_validation_aspnetcore_compatible(email: \"someName@a@b.com\")",
               "result": "success",
               "time": 0.022699999999999998,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Invalid_email_addressex_regex(email: \\"\\")",
+              "name": "Invalid_email_addressex_regex(email: \"\")",
               "result": "success",
               "time": 0.3859,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Invalid_email_addressex_regex(email: \\"first.last@test..co.uk\\")",
+              "name": "Invalid_email_addressex_regex(email: \"first.last@test..co.uk\")",
               "result": "success",
               "time": 0.0334,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Invalid_email_addressex_regex(email: \\"testperso\\")",
+              "name": "Invalid_email_addressex_regex(email: \"testperso\")",
               "result": "success",
               "time": 0.0395,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Invalid_email_addressex_regex(email: \\"thisisaverylongstringcodeplex.com\\")",
+              "name": "Invalid_email_addressex_regex(email: \"thisisaverylongstringcodeplex.com\")",
               "result": "success",
               "time": 0.0316,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_aspnetcore_compatible(email: \\" @someDomain.com\\")",
+              "name": "Valid_email_addresses_aspnetcore_compatible(email: \" @someDomain.com\")",
               "result": "success",
               "time": 0.0173,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_aspnetcore_compatible(email: \\"!#$%&'*+-/=?^_\`|~@someDomain.com\\")",
+              "name": "Valid_email_addresses_aspnetcore_compatible(email: \"!#$%&'*+-/=?^_\`|~@someDomain.com\")",
               "result": "success",
               "time": 0.0174,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_aspnetcore_compatible(email: \\"\\\\\\"firstName.lastName\\\\\\"@someDomain.com\\")",
+              "name": "Valid_email_addresses_aspnetcore_compatible(email: \"\\\"firstName.lastName\\\"@someDomain.com\")",
               "result": "success",
               "time": 0.0167,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_aspnetcore_compatible(email: \\"1234@someDomain.com\\")",
+              "name": "Valid_email_addresses_aspnetcore_compatible(email: \"1234@someDomain.com\")",
               "result": "success",
               "time": 0.0307,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_aspnetcore_compatible(email: \\"firstName.lastName@someDomain.com\\")",
+              "name": "Valid_email_addresses_aspnetcore_compatible(email: \"firstName.lastName@someDomain.com\")",
               "result": "success",
               "time": 0.0191,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_aspnetcore_compatible(email: \\"someName@1234.com\\")",
+              "name": "Valid_email_addresses_aspnetcore_compatible(email: \"someName@1234.com\")",
               "result": "success",
               "time": 0.0158,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_aspnetcore_compatible(email: \\"someName@some_domain.com\\")",
+              "name": "Valid_email_addresses_aspnetcore_compatible(email: \"someName@some_domain.com\")",
               "result": "success",
               "time": 0.0162,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_aspnetcore_compatible(email: \\"someName@some~domain.com\\")",
+              "name": "Valid_email_addresses_aspnetcore_compatible(email: \"someName@some~domain.com\")",
               "result": "success",
               "time": 0.0166,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_aspnetcore_compatible(email: \\"someName@someDomain.com\\")",
+              "name": "Valid_email_addresses_aspnetcore_compatible(email: \"someName@someDomain.com\")",
               "result": "success",
               "time": 0.0167,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_aspnetcore_compatible(email: \\"someName@someDomain￯.com\\")",
+              "name": "Valid_email_addresses_aspnetcore_compatible(email: \"someName@someDomain￯.com\")",
               "result": "success",
               "time": 0.0157,
             },
@@ -1772,73 +1772,73 @@ TestRunResult {
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_regex(email: \\"__somename@example.com\\")",
+              "name": "Valid_email_addresses_regex(email: \"__somename@example.com\")",
               "result": "success",
               "time": 0.0219,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_regex(email: \\"!def!xyz%abc@example.com\\")",
+              "name": "Valid_email_addresses_regex(email: \"!def!xyz%abc@example.com\")",
               "result": "success",
               "time": 0.022,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_regex(email: \\"\\\\\\"Abc@def\\\\\\"@example.com\\")",
+              "name": "Valid_email_addresses_regex(email: \"\\\"Abc@def\\\"@example.com\")",
               "result": "success",
               "time": 0.0245,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_regex(email: \\"\\\\\\"Abc\\\\\\\\@def\\\\\\"@example.com\\")",
+              "name": "Valid_email_addresses_regex(email: \"\\\"Abc\\\\@def\\\"@example.com\")",
               "result": "success",
               "time": 0.026,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_regex(email: \\"\\\\\\"Fred Bloggs\\\\\\"@example.com\\")",
+              "name": "Valid_email_addresses_regex(email: \"\\\"Fred Bloggs\\\"@example.com\")",
               "result": "success",
               "time": 0.0258,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_regex(email: \\"\\\\\\"Joe\\\\\\\\Blow\\\\\\"@example.com\\")",
+              "name": "Valid_email_addresses_regex(email: \"\\\"Joe\\\\Blow\\\"@example.com\")",
               "result": "success",
               "time": 0.0244,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_regex(email: \\"$A12345@example.com\\")",
+              "name": "Valid_email_addresses_regex(email: \"$A12345@example.com\")",
               "result": "success",
               "time": 0.022600000000000002,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_regex(email: \\"customer/department=shipping@example.com\\")",
+              "name": "Valid_email_addresses_regex(email: \"customer/department=shipping@example.com\")",
               "result": "success",
               "time": 0.0234,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_regex(email: \\"first.last@test.co.uk\\")",
+              "name": "Valid_email_addresses_regex(email: \"first.last@test.co.uk\")",
               "result": "success",
               "time": 0.022600000000000002,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_regex(email: \\"testperson@gmail.com\\")",
+              "name": "Valid_email_addresses_regex(email: \"testperson@gmail.com\")",
               "result": "success",
               "time": 16.3384,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_regex(email: \\"TestPerson@gmail.com\\")",
+              "name": "Valid_email_addresses_regex(email: \"TestPerson@gmail.com\")",
               "result": "success",
               "time": 0.0805,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Valid_email_addresses_regex(email: \\"testperson+label@gmail.com\\")",
+              "name": "Valid_email_addresses_regex(email: \"testperson+label@gmail.com\")",
               "result": "success",
               "time": 0.0275,
             },
@@ -1855,10 +1855,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Passes_for_ienumerable_that_doesnt_implement_ICollection",
@@ -1920,10 +1920,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Flags_enum_invalid_when_using_outofrange_negative_value",
@@ -2003,10 +2003,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Comparison_property_uses_custom_resolver",
@@ -2074,10 +2074,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Min_and_max_properties_should_be_set",
@@ -2121,10 +2121,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "To_and_from_properties_should_be_set",
@@ -2246,10 +2246,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Should_extract_member_from_member_expression",
@@ -2281,10 +2281,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Async_condition_should_work_with_child_collection",
@@ -2496,10 +2496,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Comparison_property_uses_custom_resolver",
@@ -2591,10 +2591,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Comparison_property_uses_custom_resolver",
@@ -2680,10 +2680,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "To_and_from_properties_should_be_set",
@@ -2799,10 +2799,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Can_use_custom_subclass_with_nongeneric_overload",
@@ -2876,10 +2876,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Uses_inline_validator_to_build_rules",
@@ -2893,10 +2893,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "All_languages_should_be_loaded",
@@ -2965,19 +2965,19 @@ TestRunResult {
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Gets_translation_for_bosnian_latin_culture(cultureName: \\"bs-Latn-BA\\")",
+              "name": "Gets_translation_for_bosnian_latin_culture(cultureName: \"bs-Latn-BA\")",
               "result": "success",
               "time": 0.011,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Gets_translation_for_bosnian_latin_culture(cultureName: \\"bs-Latn\\")",
+              "name": "Gets_translation_for_bosnian_latin_culture(cultureName: \"bs-Latn\")",
               "result": "success",
               "time": 0.0627,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Gets_translation_for_bosnian_latin_culture(cultureName: \\"bs\\")",
+              "name": "Gets_translation_for_bosnian_latin_culture(cultureName: \"bs\")",
               "result": "success",
               "time": 0.661,
             },
@@ -2995,19 +2995,19 @@ TestRunResult {
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Gets_translation_for_serbian_culture(cultureName: \\"sr-Latn-RS\\")",
+              "name": "Gets_translation_for_serbian_culture(cultureName: \"sr-Latn-RS\")",
               "result": "success",
               "time": 0.01,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Gets_translation_for_serbian_culture(cultureName: \\"sr-Latn\\")",
+              "name": "Gets_translation_for_serbian_culture(cultureName: \"sr-Latn\")",
               "result": "success",
               "time": 0.0484,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Gets_translation_for_serbian_culture(cultureName: \\"sr\\")",
+              "name": "Gets_translation_for_serbian_culture(cultureName: \"sr\")",
               "result": "success",
               "time": 0.4456,
             },
@@ -3030,10 +3030,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Min_and_max_properties_should_be_set",
@@ -3137,10 +3137,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Comparison_property_uses_custom_resolver",
@@ -3226,10 +3226,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Comparison_property_uses_custom_resolver",
@@ -3333,10 +3333,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Correctly_assigns_default_localized_error_message",
@@ -3380,10 +3380,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Uses_localized_name",
@@ -3403,10 +3403,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "ComplexPropertyGet",
@@ -3468,10 +3468,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Adds_argument_and_custom_arguments",
@@ -3539,10 +3539,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Can_use_child_validator_at_model_level",
@@ -3562,10 +3562,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Resolves_nested_properties",
@@ -3591,10 +3591,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Fails_for_array",
@@ -3662,10 +3662,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Comparison_property_uses_custom_resolver",
@@ -3739,10 +3739,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Fails_when_nullable_value_type_is_null",
@@ -3780,10 +3780,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Not_null_validator_should_not_crash_with_non_nullable_value_type",
@@ -3821,10 +3821,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "OnFailure_called_for_each_failed_rule",
@@ -3892,10 +3892,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Should_fail_when_predicate_returns_false",
@@ -3933,10 +3933,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "AddIndexer_throws_when_nothing_added",
@@ -3986,10 +3986,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Can_access_expression_in_message",
@@ -4087,10 +4087,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Adding_a_validator_should_return_builder",
@@ -4272,10 +4272,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Async_inside_dependent_rules",
@@ -4367,10 +4367,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Applies_multiple_rulesets_to_rule",
@@ -4504,10 +4504,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Scale_precision_should_be_valid",
@@ -4551,10 +4551,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Async_condition_can_be_used_inside_ruleset",
@@ -4814,10 +4814,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Should_validate_property_value_without_instance",
@@ -4831,10 +4831,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "IsValidTests_CaseInsensitive_CaseCorrect",
@@ -4902,10 +4902,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Add_AddsItem",
@@ -4931,10 +4931,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Transforms_collection_element",
@@ -4966,10 +4966,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Can_Provide_conditional_severity",
@@ -5019,10 +5019,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Can_Provide_state_for_item_in_collection",
@@ -5054,10 +5054,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Does_not_throw_when_valid",
@@ -5149,10 +5149,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Can_serialize_failure",
@@ -5208,10 +5208,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Does_not_throw_when_rule_declared_without_property",
@@ -5249,10 +5249,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Can_use_property_with_include",
@@ -5320,10 +5320,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "Allows_only_one_failure_to_match",
@@ -5482,7 +5482,7 @@ TestRunResult {
             },
             TestCaseResult {
               "error": undefined,
-              "name": "ShouldHaveValidationError_should_not_throw_when_there_are_validation_errors__WhenAsyn_is_used(age: 42, cardNumber: \\"\\")",
+              "name": "ShouldHaveValidationError_should_not_throw_when_there_are_validation_errors__WhenAsyn_is_used(age: 42, cardNumber: \"\")",
               "result": "success",
               "time": 0.6089,
             },
@@ -5518,13 +5518,13 @@ TestRunResult {
             },
             TestCaseResult {
               "error": undefined,
-              "name": "ShouldHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_Is_Used(age: 17, cardNumber: \\"\\")",
+              "name": "ShouldHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_Is_Used(age: 17, cardNumber: \"\")",
               "result": "success",
               "time": 1.7937,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "ShouldHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_Is_Used(age: 17, cardNumber: \\"cardNumber\\")",
+              "name": "ShouldHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_Is_Used(age: 17, cardNumber: \"cardNumber\")",
               "result": "success",
               "time": 0.6412,
             },
@@ -5536,7 +5536,7 @@ TestRunResult {
             },
             TestCaseResult {
               "error": undefined,
-              "name": "ShouldHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_Is_Used(age: 42, cardNumber: \\"cardNumber\\")",
+              "name": "ShouldHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_Is_Used(age: 42, cardNumber: \"cardNumber\")",
               "result": "success",
               "time": 0.8127,
             },
@@ -5650,13 +5650,13 @@ TestRunResult {
             },
             TestCaseResult {
               "error": undefined,
-              "name": "ShouldNotHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_is_used(age: 17, cardNumber: \\"\\")",
+              "name": "ShouldNotHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_is_used(age: 17, cardNumber: \"\")",
               "result": "success",
               "time": 0.5719,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "ShouldNotHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_is_used(age: 17, cardNumber: \\"cardNumber\\")",
+              "name": "ShouldNotHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_is_used(age: 17, cardNumber: \"cardNumber\")",
               "result": "success",
               "time": 0.5838,
             },
@@ -5668,13 +5668,13 @@ TestRunResult {
             },
             TestCaseResult {
               "error": undefined,
-              "name": "ShouldNotHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_is_used(age: 42, cardNumber: \\"cardNumber\\")",
+              "name": "ShouldNotHaveValidationError_should_throw_when_there_are_not_validation_errors__WhenAsyn_is_used(age: 42, cardNumber: \"cardNumber\")",
               "result": "success",
               "time": 0.897,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "ShouldNotHaveValidationError_should_throw_when_there_are_validation_errors__WhenAsyn_is_used(age: 42, cardNumber: \\"\\")",
+              "name": "ShouldNotHaveValidationError_should_throw_when_there_are_validation_errors__WhenAsyn_is_used(age: 42, cardNumber: \"\")",
               "result": "success",
               "time": 0.6807,
             },
@@ -5728,25 +5728,25 @@ TestRunResult {
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Unexpected_message_check(withoutErrMsg: \\"bar\\", errMessages: [\\"bar\\"])",
+              "name": "Unexpected_message_check(withoutErrMsg: \"bar\", errMessages: [\"bar\"])",
               "result": "success",
               "time": 0.1548,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Unexpected_message_check(withoutErrMsg: \\"bar\\", errMessages: [\\"foo\\", \\"bar\\"])",
+              "name": "Unexpected_message_check(withoutErrMsg: \"bar\", errMessages: [\"foo\", \"bar\"])",
               "result": "success",
               "time": 0.1797,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Unexpected_message_check(withoutErrMsg: \\"bar\\", errMessages: [\\"foo\\"])",
+              "name": "Unexpected_message_check(withoutErrMsg: \"bar\", errMessages: [\"foo\"])",
               "result": "success",
               "time": 0.3297,
             },
             TestCaseResult {
               "error": undefined,
-              "name": "Unexpected_message_check(withoutErrMsg: \\"bar\\", errMessages: [])",
+              "name": "Unexpected_message_check(withoutErrMsg: \"bar\", errMessages: [])",
               "result": "success",
               "time": 0.7345999999999999,
             },
@@ -5776,12 +5776,12 @@ TestRunResult {
 exports[`dotnet-trx tests report from SilentNotes test results matches snapshot 1`] = `
 TestRunResult {
   "path": "fixtures/external/SilentNotes.trx",
-  "suites": Array [
+  "suites": [
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "AreEqualWorksWithDifferentPassword",
@@ -5825,10 +5825,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "FileLifecycleWorks",
@@ -5866,10 +5866,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "FileLifecycleWorks",
@@ -5919,10 +5919,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "ChoosesCorrectUrlForGmxComEmail",
@@ -5942,10 +5942,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "FileLifecycleWorks",
@@ -5977,10 +5977,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "FileLifecycleWorks",
@@ -6012,10 +6012,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "FileLifecycleWorks",
@@ -6053,10 +6053,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "AreEqualWorksWithNullDate",
@@ -6118,10 +6118,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "ParsesAllErrorCodesCorrectly",
@@ -6147,10 +6147,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "BuildAuthorizationRequestUrlEscapesParameters",
@@ -6212,10 +6212,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "BuildOAuth2AuthorizationRequestUrlWorks",
@@ -6253,10 +6253,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "AreEqualsWorksCorrectly",
@@ -6306,10 +6306,10 @@ TestRunResult {
       "totalTime": undefined,
     },
     TestSuiteResult {
-      "groups": Array [
+      "groups": [
         TestGroupResult {
           "name": null,
-          "tests": Array [
+          "tests": [
             TestCaseResult {
               "error": undefined,
               "name": "DecryptAfterDesrializationCanReadAllPropertiesBack",

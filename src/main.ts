@@ -176,14 +176,14 @@ class TestReporter {
       results.push(tr)
     }
 
-    let createResp = null,
-      baseUrl = '',
-      check_run_id = 0
+    let createResp = null
+    let baseUrl = ''
+    let check_run_id = 0
 
     switch (this.outputTo) {
       case 'checks': {
         core.info(`Creating check run ${name}`)
-        createResp = await this.octokit.checks.create({
+        createResp = await this.octokit.rest.checks.create({
           head_sha: this.context.sha,
           name,
           status: 'in_progress',
@@ -193,7 +193,7 @@ class TestReporter {
           },
           ...github.context.repo
         })
-        baseUrl = createResp.data.html_url
+        baseUrl = createResp.data.html_url as string
         check_run_id = createResp.data.id
         break
       }
@@ -222,7 +222,7 @@ class TestReporter {
     core.info(`Updating check run conclusion (${conclusion}) and output`)
     switch (this.outputTo) {
       case 'checks': {
-        const resp = await this.octokit.checks.update({
+        const resp = await this.octokit.rest.checks.update({
           check_run_id,
           conclusion,
           status: 'completed',

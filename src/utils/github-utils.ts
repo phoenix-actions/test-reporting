@@ -34,8 +34,7 @@ export function getCheckRunContext(): {sha: string; runId: number} {
 export async function downloadArtifact(
   octokit: InstanceType<typeof GitHub>,
   artifactId: number,
-  fileName: string,
-  token: string
+  fileName: string
 ): Promise<void> {
   core.startGroup(`Downloading artifact ${fileName}`)
   try {
@@ -47,9 +46,8 @@ export async function downloadArtifact(
       archive_format: 'zip'
     })
 
-    const headers = {
-      Authorization: `Bearer ${token}`
-    }
+    const headers = {}
+
     const resp = await got(req.url, {
       headers,
       followRedirect: false
@@ -70,7 +68,7 @@ export async function downloadArtifact(
       throw new Error(`Location header has unexpected value: ${url}`)
     }
 
-    const downloadStream = got.stream(url, {headers})
+    const downloadStream = got.stream(url)
     const fileWriterStream = createWriteStream(fileName)
 
     core.info(`Downloading ${url}`)

@@ -85,7 +85,7 @@ class ArtifactProvider {
         }
         for (const art of artifacts) {
             const fileName = `${art.name}.zip`;
-            await github_utils_1.downloadArtifact(this.octokit, art.id, fileName, this.token);
+            await github_utils_1.downloadArtifact(this.octokit, art.id, fileName);
             core.startGroup(`Reading archive ${fileName}`);
             try {
                 const reportName = this.getReportName(art.name);
@@ -2088,7 +2088,7 @@ function getCheckRunContext() {
     return { sha: github.context.sha, runId };
 }
 exports.getCheckRunContext = getCheckRunContext;
-async function downloadArtifact(octokit, artifactId, fileName, token) {
+async function downloadArtifact(octokit, artifactId, fileName) {
     core.startGroup(`Downloading artifact ${fileName}`);
     try {
         core.info(`Artifact ID: ${artifactId}`);
@@ -2097,9 +2097,7 @@ async function downloadArtifact(octokit, artifactId, fileName, token) {
             artifact_id: artifactId,
             archive_format: 'zip'
         });
-        const headers = {
-            Authorization: `Bearer ${token}`
-        };
+        const headers = {};
         const resp = await got_1.default(req.url, {
             headers,
             followRedirect: false
@@ -2117,7 +2115,7 @@ async function downloadArtifact(octokit, artifactId, fileName, token) {
         if (typeof url !== 'string') {
             throw new Error(`Location header has unexpected value: ${url}`);
         }
-        const downloadStream = got_1.default.stream(url, { headers });
+        const downloadStream = got_1.default.stream(url);
         const fileWriterStream = fs_1.createWriteStream(fileName);
         core.info(`Downloading ${url}`);
         downloadStream.on('downloadProgress', ({ transferred }) => {

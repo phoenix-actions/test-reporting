@@ -86,8 +86,8 @@ export class JestJunitParser implements TestParser {
         ? tc.failure[0]
         : tc.failure[0]._
       : tc.error
-      ? tc.error[0]
-      : 'unknown failure'
+        ? tc.error[0]
+        : 'unknown failure'
     let path
     let line
 

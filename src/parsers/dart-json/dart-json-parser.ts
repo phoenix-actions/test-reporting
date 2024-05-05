@@ -29,7 +29,12 @@ import {
 } from '../../test-results'
 
 class TestRun {
-  constructor(readonly path: string, readonly suites: TestSuite[], readonly success: boolean, readonly time: number) {}
+  constructor(
+    readonly path: string,
+    readonly suites: TestSuite[],
+    readonly success: boolean,
+    readonly time: number
+  ) {}
 }
 
 class TestSuite {
@@ -74,7 +79,10 @@ class TestCase {
 export class DartJsonParser implements TestParser {
   assumedWorkDir: string | undefined
 
-  constructor(readonly options: ParseOptions, readonly sdk: 'dart' | 'flutter') {}
+  constructor(
+    readonly options: ParseOptions,
+    readonly sdk: 'dart' | 'flutter'
+  ) {}
 
   async parse(path: string, content: string): Promise<TestRunResult> {
     const tr = this.getTestRun(path, content)
@@ -194,7 +202,8 @@ export class DartJsonParser implements TestParser {
   private getErrorMessage(message: string, print: string): string {
     if (this.sdk === 'flutter') {
       const uselessMessageRe = /^Test failed\. See exception logs above\.\nThe test description was:/m
-      const flutterPrintRe = /^══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═+\s+(.*)\s+When the exception was thrown, this was the stack:/ms
+      const flutterPrintRe =
+        /^══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═+\s+(.*)\s+When the exception was thrown, this was the stack:/ms
       if (uselessMessageRe.test(message)) {
         const match = print.match(flutterPrintRe)
         if (match !== null) {

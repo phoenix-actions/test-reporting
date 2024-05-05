@@ -50,7 +50,7 @@ export class ArtifactProvider implements InputProvider {
   async load(): Promise<ReportInput> {
     const result: ReportInput = {}
 
-    const resp = await this.octokit.actions.listWorkflowRunArtifacts({
+    const resp = await this.octokit.rest.actions.listWorkflowRunArtifacts({
       ...github.context.repo,
       run_id: this.runId
     })
@@ -68,7 +68,7 @@ export class ArtifactProvider implements InputProvider {
 
     for (const art of artifacts) {
       const fileName = `${art.name}.zip`
-      await downloadArtifact(this.octokit, art.id, fileName, this.token)
+      await downloadArtifact(this.octokit, art.id, fileName)
       core.startGroup(`Reading archive ${fileName}`)
       try {
         const reportName = this.getReportName(art.name)

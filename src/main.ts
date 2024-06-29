@@ -51,6 +51,7 @@ class TestReporter {
   readonly listTests = core.getInput('list-tests', {required: true}) as 'all' | 'failed' | 'none'
   readonly maxAnnotations = parseInt(core.getInput('max-annotations', {required: true}))
   readonly failOnError = core.getInput('fail-on-error', {required: true}) === 'true'
+  readonly failOnEmpty = core.getInput('fail-on-empty', {required: true}) === 'true'
   readonly workDirInput = core.getInput('working-directory', {required: false})
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
   readonly outputTo = core.getInput('output-to', {required: false})
@@ -157,7 +158,7 @@ class TestReporter {
       return
     }
 
-    if (results.length === 0) {
+    if (results.length === 0 && this.failOnEmpty) {
       core.setFailed(`No test report files were found`)
       return
     }

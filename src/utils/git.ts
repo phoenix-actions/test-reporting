@@ -5,7 +5,8 @@ export async function listFiles(): Promise<string[]> {
   core.startGroup('Listing all files tracked by git')
   let output = ''
   try {
-    output = (await exec('git', ['ls-files', '-z'])).stdout
+    const execOptions = {silent: true} as const // On large repos, this output can be gigantic
+    output = (await exec('git', ['ls-files', '-z'], execOptions)).stdout
   } finally {
     fixStdOutNullTermination()
     core.endGroup()

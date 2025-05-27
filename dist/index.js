@@ -2040,7 +2040,8 @@ async function listFiles() {
     core.startGroup('Listing all files tracked by git');
     let output = '';
     try {
-        output = (await (0, exec_1.default)('git', ['ls-files', '-z'])).stdout;
+        const execOptions = { silent: true }; // On large repos, this output can be gigantic
+        output = (await (0, exec_1.default)('git', ['ls-files', '-z'], execOptions)).stdout;
     }
     finally {
         fixStdOutNullTermination();

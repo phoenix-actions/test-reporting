@@ -140,7 +140,7 @@ class TestReporter {
     }
 
     const isFailed = results.some(tr => tr.result === 'failed')
-    const conclusion = isFailed ? 'failure' : 'success'
+    const conclusion = this.failOnError && isFailed ? 'failure' : 'success'
     const passed = results.reduce((sum, tr) => sum + tr.passed, 0)
     const failed = results.reduce((sum, tr) => sum + tr.failed, 0)
     const skipped = results.reduce((sum, tr) => sum + tr.skipped, 0)

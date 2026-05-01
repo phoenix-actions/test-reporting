@@ -11,7 +11,8 @@ on:
 permissions:
   actions: read
   checks: write
-    
+  contents: write
+
 jobs:
   build-test:
     name: Build & Test
@@ -47,4 +48,3 @@ jobs:
           path: __tests__/fixtures/mochawesome-json.json
           reporter: mochawesome-json
           fail-on-error: false
-  

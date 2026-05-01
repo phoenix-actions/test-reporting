@@ -1,0 +1,32 @@
+name: 'CI Report'
+on:
+  workflow_run:
+    workflows: ['CI']
+    types: [completed]
+
+permissions:
+  actions: read
+  checks: write
+
+jobs:
+  report:
+    name: Test Report
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Create test report
+        uses: ./
+        with:
+          artifact: test-results
+          name: Workflow Report
+          path: '*.xml'
+          reporter: jest-junit
+
+      - name: Create mochawesome report
+        uses: ./
+        if: success() || failure()
+        with:
+          name: Mochawesome Tests
+          path: __tests__/fixtures/mochawesome-json.json
+          reporter: mochawesome-json
+          fail-on-error: false

@@ -10,8 +10,6 @@ on:
 
 permissions:
   actions: read
-  checks: write
-  contents: write
 
 jobs:
   build-test:
@@ -31,20 +29,3 @@ jobs:
         with:
           name: test-results
           path: __tests__/__results__/*.xml
-
-      - name: Create test report
-        uses: ./
-        with:
-          artifact: test-results
-          name: Workflow Report
-          path: '*.xml'
-          reporter: jest-junit
-
-      - name: Create mochawesome report
-        uses: ./
-        if: success() || failure()
-        with:
-          name: Mochawesome Tests
-          path: __tests__/fixtures/mochawesome-json.json
-          reporter: mochawesome-json
-          fail-on-error: false

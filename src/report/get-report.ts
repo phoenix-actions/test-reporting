@@ -12,6 +12,7 @@ export interface ReportOptions {
   slugPrefix: string
   baseUrl: string
   onlySummary: boolean
+  stackTraceInSummary: boolean
 }
 
 const defaultOptions: ReportOptions = {
@@ -19,7 +20,8 @@ const defaultOptions: ReportOptions = {
   listTests: 'all',
   slugPrefix: '',
   baseUrl: '',
-  onlySummary: false
+  onlySummary: false,
+  stackTraceInSummary: false
 }
 
 export function getReport(results: TestRunResult[], options: ReportOptions = defaultOptions): string {
@@ -239,9 +241,13 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
       const result = getResultIcon(tc.result)
       sections.push(`${space}${result} ${tc.name}`)
       if (tc.error) {
-        const lines = (tc.error.message ?? getFirstNonEmptyLine(tc.error.details)?.trim())
-          ?.split(/\r?\n/g)
-          .map(l => '\t' + l)
+        let errorData = ''
+        if (options.stackTraceInSummary) {
+          errorData = tc.error.details ?? ''
+        } else {
+          errorData = tc.error.message ?? getFirstNonEmptyLine(tc.error.details)?.trim() ?? ''
+        }
+        const lines = errorData.split(/\r?\n/g).map(l => '\t' + l)
         if (lines) {
           sections.push(...lines)
         }

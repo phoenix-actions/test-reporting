@@ -54,6 +54,7 @@ class TestReporter {
   readonly workDirInput = core.getInput('working-directory', {required: false})
   readonly onlySummary = core.getInput('only-summary', {required: false}) === 'true'
   readonly outputTo = core.getInput('output-to', {required: false})
+  readonly stackTraceInSummary = this.outputTo === 'step-summary' ? true : false
   readonly token = core.getInput('token', {required: true})
   readonly slugPrefix: string = ''
   readonly octokit: InstanceType<typeof GitHub>
@@ -205,8 +206,8 @@ class TestReporter {
     }
 
     core.info('Creating report summary')
-    const {listSuites, listTests, onlySummary, slugPrefix} = this
-    const summary = getReport(results, {listSuites, listTests, baseUrl, slugPrefix, onlySummary})
+    const {listSuites, listTests, onlySummary, slugPrefix, stackTraceInSummary} = this
+    const summary = getReport(results, {listSuites, listTests, baseUrl, slugPrefix, onlySummary, stackTraceInSummary})
 
     core.info('Creating annotations')
     const annotations = getAnnotations(results, this.maxAnnotations)
